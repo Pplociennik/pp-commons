@@ -47,7 +47,7 @@ class PropertiesReaderTest {
 
     @Test
     void shouldReturnValidValue_whenValidFilePathAndPropertyKey() {
-        var expectedValue = "lang/AuthResExcMsg";
+        var expectedValue = "lang/CommonsResExcMsg";
         var value = TEST_READER.getProperty( VALID_PROPERTY_KEY, VALID_PROPERTIES_FILE_PATH );
         Assertions.assertThat( value ).isEqualTo( expectedValue );
     }

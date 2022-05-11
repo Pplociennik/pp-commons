@@ -24,6 +24,7 @@
 
 package utility;
 
+import com.github.pplociennik.util.utility.CustomObjects;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,7 +33,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.Collection;
 import java.util.Set;
 
-import static com.github.pplociennik.auth.common.utility.CustomObjects.requireNonEmpty;
+import static com.github.pplociennik.util.utility.CustomObjects.requireNonEmpty;
+
 
 /**
  * Unit tests for {@link CustomObjects} class.

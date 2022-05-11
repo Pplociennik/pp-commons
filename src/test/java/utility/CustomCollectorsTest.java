@@ -24,12 +24,13 @@
 
 package utility;
 
+import com.github.pplociennik.util.utility.CustomCollectors;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static com.github.pplociennik.auth.common.utility.CustomCollectors.toSingleton;
+import static com.github.pplociennik.util.utility.CustomCollectors.toSingleton;
 
 /**
  * Unit tests for {@link CustomCollectors} class.

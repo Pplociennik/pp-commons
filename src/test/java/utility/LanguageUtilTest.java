@@ -24,6 +24,7 @@
 
 package utility;
 
+import com.github.pplociennik.util.utility.LanguageUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,7 +33,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
 
-import static com.github.pplociennik.auth.common.lang.AuthResExcMsgTranslationKey.*;
+import static com.github.pplociennik.util.lang.CommonsResExcMsgTranslationKey.READING_PROPERTIES_FAILED;
+import static com.github.pplociennik.util.lang.CommonsResExcMsgTranslationKey.UNEXPECTED_EXCEPTION;
 
 /**
  * Unit tests for {@link LanguageUtil}.
@@ -55,36 +57,36 @@ class LanguageUtilTest {
     @Test
     void shouldReturnEnglishTranslation_whenLocaleSetToEnglish() {
 
-        var expectedTranslation = "The provided email address is already in use!";
+        var expectedTranslation = "Properties cannot be read from file: {0}.";
 
         var localeForBeingSet = Locale.ENGLISH;
         LocaleContextHolder.setLocale( localeForBeingSet );
 
-        var translation = LanguageUtil.getLocalizedMessage( AUTHENTICATION_EMAIL_ALREADY_IN_USE );
+        var translation = LanguageUtil.getLocalizedMessage( READING_PROPERTIES_FAILED );
         Assertions.assertThat( translation ).isEqualTo( expectedTranslation );
     }
 
     @Test
     void shouldReturnGermanTranslation_whenLocaleSetToGerman() {
 
-        var expectedTranslation = "E-Mail-Adresse entspricht nicht dem angegebenen Muster!";
+        var expectedTranslation = "Eigenschaften kÃ¶nnen nicht aus Datei: {0} gelesen werden. ";
 
         var localeForBeingSet = Locale.GERMAN;
         LocaleContextHolder.setLocale( localeForBeingSet );
 
-        var translation = LanguageUtil.getLocalizedMessage( AUTHENTICATION_EMAIL_NOT_MATCHING_PATTERN );
+        var translation = LanguageUtil.getLocalizedMessage( READING_PROPERTIES_FAILED );
         Assertions.assertThat( translation ).isEqualTo( expectedTranslation );
     }
 
     @Test
     void shouldReturnPolishTranslation_whenLocaleSetToPolish() {
 
-        var expectedTranslation = "Niepoprawny adres email!";
+        var expectedTranslation = "Nie moÅ¼na wczytaÄ\u0087 parametrÃ³w z pliku: {0}.";
 
         var localeForBeingSet = new Locale( "pl" );
         LocaleContextHolder.setLocale( localeForBeingSet );
 
-        var translation = LanguageUtil.getLocalizedMessage( AUTHENTICATION_EMAIL_NOT_MATCHING_PATTERN );
+        var translation = LanguageUtil.getLocalizedMessage( READING_PROPERTIES_FAILED );
         Assertions.assertThat( translation ).isEqualTo( expectedTranslation );
     }
 
