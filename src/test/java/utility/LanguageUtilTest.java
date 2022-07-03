@@ -29,6 +29,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
@@ -90,13 +91,28 @@ class LanguageUtilTest {
         Assertions.assertThat( translation ).isEqualTo( expectedTranslation );
     }
 
-    @Test
-    void shouldReturnValidTranslationWithParams() {
+    @ParameterizedTest
+    @ValueSource( strings = { "ex1, ex2, ex3" } )
+    void shouldReturnValidTranslation_whenParametersAreOfTheTypeString( String aParam ) {
 
-        var testReasonMessage = "Test reason message";
-        var params = new Object[]{ testReasonMessage };
+        var params = new Object[]{ aParam };
 
-        var expectedTranslation = "Unexpected exception! Reason: Test reason message";
+        var expectedTranslation = "Unexpected exception! Reason: " + aParam;
+
+        var localeForBeingSet = Locale.ENGLISH;
+        LocaleContextHolder.setLocale( localeForBeingSet );
+
+        var translation = LanguageUtil.getLocalizedMessage( UNEXPECTED_EXCEPTION, params );
+        Assertions.assertThat( translation ).isEqualTo( expectedTranslation );
+    }
+
+    @ParameterizedTest
+    @ValueSource( longs = { 1L, 3L, 127L } )
+    void shouldReturnValidTranslation_whenParametersAreOfTheTypeLong( Long aParam ) {
+
+        var params = new Object[]{ aParam };
+
+        var expectedTranslation = "Unexpected exception! Reason: " + aParam.longValue();
 
         var localeForBeingSet = Locale.ENGLISH;
         LocaleContextHolder.setLocale( localeForBeingSet );
