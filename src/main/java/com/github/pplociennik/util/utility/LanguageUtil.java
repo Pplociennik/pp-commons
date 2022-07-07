@@ -28,8 +28,11 @@ package com.github.pplociennik.util.utility;
 import com.github.pplociennik.util.lang.TranslationKey;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.lang.NonNull;
 
 import java.util.Locale;
+
+import static java.util.Objects.requireNonNull;
 
 
 /**
@@ -49,6 +52,17 @@ public class LanguageUtil {
     }
 
     /**
+     * Sets the specified {@link Locale} in the application's context.
+     *
+     * @param aLocale
+     *         a locale to be set
+     */
+    public static void setLocale( @NonNull Locale aLocale ) {
+        requireNonNull( aLocale );
+        LocaleContextHolder.setLocale( aLocale );
+    }
+
+    /**
      * Returns translated message by a key.
      *
      * @param aKey
@@ -56,7 +70,7 @@ public class LanguageUtil {
      * @return the translated message
      */
     public static String getLocalizedMessage( TranslationKey aKey ) {
-        return getLocalizedMessage( aKey, null );
+        return getLocalizedMessage( aKey, ( Object[] ) null );
     }
 
     /**
@@ -72,5 +86,35 @@ public class LanguageUtil {
         var messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename( aKey.getTranslationsSourcePropertyName() );
         return messageSource.getMessage( aKey.toString(), args, getLocale() );
+    }
+
+    /**
+     * Returns a translated message by a key and the locale.
+     *
+     * @param aKey
+     *         a message key
+     * @param aLocale
+     *         a locale
+     * @return the translated message
+     */
+    public static String getLocalizedMessage( TranslationKey aKey, Locale aLocale ) {
+        return getLocalizedMessage( aKey, aLocale, null );
+    }
+
+    /**
+     * Returns parameterized translated message by a key and the locale.
+     *
+     * @param aKey
+     *         a message key
+     * @param aLocale
+     *         a locale
+     * @param args
+     *         message arguments
+     * @return the translated message
+     */
+    public static String getLocalizedMessage( TranslationKey aKey, Locale aLocale, Object[] args ) {
+        var messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename( aKey.getTranslationsSourcePropertyName() );
+        return messageSource.getMessage( aKey.toString(), args, aLocale );
     }
 }
