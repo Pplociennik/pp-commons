@@ -3,6 +3,7 @@ package com.github.pplociennik.commons.persistence;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -14,6 +15,7 @@ import java.time.ZonedDateTime;
  * @author Created by: Pplociennik at 21.12.2022 21:39
  */
 @MappedSuperclass
+@SuperBuilder
 public abstract class ModifiableDataEntity extends BaseIdentifiableDataEntity {
 
     /**

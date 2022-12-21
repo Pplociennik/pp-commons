@@ -3,6 +3,7 @@ package com.github.pplociennik.commons.persistence;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
  * @author Created by: Pplociennik at 21.12.2022 21:27
  */
 @MappedSuperclass
+@SuperBuilder
 public abstract class BaseIdentifiableDataEntity {
 
     /**
