@@ -3,7 +3,6 @@ package com.github.pplociennik.commons.persistence;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -14,7 +13,6 @@ import javax.persistence.MappedSuperclass;
  * @author Created by: Pplociennik at 21.12.2022 21:48
  */
 @MappedSuperclass
-@SuperBuilder
 public abstract class VersionableDataEntity extends ModifiableDataEntity {
 
     /**
