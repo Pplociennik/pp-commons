@@ -24,7 +24,7 @@
 
 package utility.properties;
 
-import com.github.pplociennik.util.utility.properties.PropertiesReader;
+import com.github.pplociennik.commons.utility.properties.PropertiesReader;
 
 /**
  * A simple test implementation of {@link PropertiesReader} abstract class.

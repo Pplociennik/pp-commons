@@ -22,31 +22,33 @@
  * SOFTWARE.
  */
 
-package com.github.pplociennik.util.lang;
+package com.github.pplociennik.commons.utility;
+
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
- * An enum holding keys for identifying exceptions' translation messages.
+ * A utility providing custom collectors.
  *
- * @author Created by: Pplociennik at 22.12.2021 20:07
+ * @author Created by: Pplociennik at 30.01.2022 10:10
  */
-public enum CommonsResExcMsgTranslationKey implements TranslationKey {
-
-    READING_PROPERTIES_FAILED,
+public class CustomCollectors {
 
     /**
-     * Unexpected exception being thrown.
+     * Returns a singleton element from {@link java.util.stream.Stream}.
+     *
+     * @param <T>
+     *         a type of the object being returned
+     * @return a singleton element from stream
+     * @throws {@link
+     *         IllegalStateException} when there is more or less elements in the stream than one
      */
-    UNEXPECTED_EXCEPTION;
-
-    private static final String EXCEPTIONS_TRANSLATIONS_BASENAME_PROPERTY = "lang/CommonsResExcMsg";
-
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
-    @Override
-    public String getTranslationsSourcePropertyName() {
-        return EXCEPTIONS_TRANSLATIONS_BASENAME_PROPERTY;
+    public static < T > Collector< T, ?, T > toSingleton() {
+        return Collectors.collectingAndThen( Collectors.toList(), list -> {
+            if ( list.size() != 1 ) {
+                throw new IllegalStateException( "There should be exactly one element in the stream!" );
+            }
+            return list.get( 0 );
+        } );
     }
 }

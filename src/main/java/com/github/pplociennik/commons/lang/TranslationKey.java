@@ -1,4 +1,4 @@
-package com.github.pplociennik.util.lang;
+package com.github.pplociennik.commons.lang;
 
 /**
  * TODO: Describe this class.

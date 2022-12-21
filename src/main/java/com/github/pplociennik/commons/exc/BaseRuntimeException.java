@@ -1,7 +1,7 @@
-package com.github.pplociennik.util.exc;
+package com.github.pplociennik.commons.exc;
 
-import com.github.pplociennik.util.lang.TranslationKey;
-import com.github.pplociennik.util.utility.LanguageUtil;
+import com.github.pplociennik.commons.lang.TranslationKey;
+import com.github.pplociennik.commons.utility.LanguageUtil;
 
 import java.io.Serializable;
 

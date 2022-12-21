@@ -22,15 +22,15 @@
  * SOFTWARE.
  */
 
-package com.github.pplociennik.util.utility.properties;
+package com.github.pplociennik.commons.utility.properties;
 
-import com.github.pplociennik.util.exc.ReadingPropertiesException;
+import com.github.pplociennik.commons.exc.ReadingPropertiesException;
 
 import java.io.InputStream;
 import java.util.Properties;
 
-import static com.github.pplociennik.util.lang.CommonsResExcMsgTranslationKey.READING_PROPERTIES_FAILED;
-import static com.github.pplociennik.util.utility.CustomObjects.requireNonEmpty;
+import static com.github.pplociennik.commons.lang.CommonsResExcMsgTranslationKey.READING_PROPERTIES_FAILED;
+import static com.github.pplociennik.commons.utility.CustomObjects.requireNonEmpty;
 
 /**
  * A util for reading properties.
@@ -70,7 +70,7 @@ public abstract class PropertiesReader {
 
     private String validateProperty( String aProperty, String aKey, String aPath ) {
         if ( aProperty == null ) {
-            throw new IllegalStateException( "Property " + aKey + " has not been found in file \'" + aPath + "\'." );
+            throw new IllegalStateException( "Property " + aKey + " has not been found in file '" + aPath + "'." );
         }
         return aProperty;
     }

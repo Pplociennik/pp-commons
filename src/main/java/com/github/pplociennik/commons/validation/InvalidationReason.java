@@ -22,32 +22,44 @@
  * SOFTWARE.
  */
 
-package com.github.pplociennik.util.exc;
+package com.github.pplociennik.commons.validation;
 
-import com.github.pplociennik.util.lang.TranslationKey;
+import com.github.pplociennik.commons.exc.ValidationException;
+import com.github.pplociennik.commons.lang.TranslationKey;
+import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
 
+import static com.github.pplociennik.commons.utility.LanguageUtil.getLocalizedMessage;
+
+
 /**
- * An exception being thrown when the properties cannot be read.
+ * Presents the reason of the validation process failure. Holds an exception with parameterized message.
  *
- * @author Created by: Pplociennik at 29.01.2022 20:19
+ * @author Created by: Pplociennik at 22.12.2021 19:32
  */
-public class ReadingPropertiesException extends BaseRuntimeException {
+public class InvalidationReason {
 
-    public ReadingPropertiesException( String message ) {
-        super( message );
+    private final ValidationException exception;
+
+    public InvalidationReason( @NonNull TranslationKey aKey, @NonNull Serializable[] aParams ) {
+        this.exception = new ValidationException( getLocalizedMessage( aKey, aParams ) );
     }
 
-    public ReadingPropertiesException( String message, Throwable cause ) {
-        super( message, cause );
+    public String getReason() {
+        return exception.getMessage();
     }
 
-    public ReadingPropertiesException( Throwable cause ) {
-        super( cause );
+    public StackTraceElement[] getStackTrace() {
+        return exception.getStackTrace();
     }
 
-    public ReadingPropertiesException( TranslationKey aKey, Serializable... aArgs ) {
-        super( aKey, aArgs );
+    public Throwable[] getSuppressed() {
+        return exception.getSuppressed();
+    }
+
+    @Override
+    public String toString() {
+        return "InvalidationReason{" + "exception=" + exception + '}';
     }
 }

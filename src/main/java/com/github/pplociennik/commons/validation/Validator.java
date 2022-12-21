@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-package com.github.pplociennik.util.validation;
+package com.github.pplociennik.commons.validation;
 
-import com.github.pplociennik.util.exc.ValidationException;
-import com.github.pplociennik.util.lang.TranslationKey;
+import com.github.pplociennik.commons.exc.ValidationException;
+import com.github.pplociennik.commons.lang.TranslationKey;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,8 +44,8 @@ import static java.util.stream.Collectors.joining;
  */
 public final class Validator< T > implements ValidatorIf< T > {
 
-    private Collection< T > values;
-    private List< InvalidationReason > reasons = new ArrayList<>();
+    private final Collection< T > values;
+    private final List< InvalidationReason > reasons = new ArrayList<>();
 
     Validator( final Collection< T > aValues ) {
         values = aValues;
@@ -64,8 +64,10 @@ public final class Validator< T > implements ValidatorIf< T > {
      * {@inheritDoc}
      */
     @Override
-    public ValidatorIf< T > validate( Predicate< T > aPredicate, TranslationKey aKey, Set< Function< T, Serializable > > aExcParams ) {
-        values.stream()
+    public ValidatorIf< T > validate(
+            Predicate< T > aPredicate, TranslationKey aKey, Set< Function< T, Serializable > > aExcParams ) {
+        values
+                .stream()
                 .filter( aPredicate.negate() )
                 .map( value -> mapExcParams( aExcParams, value ) )
                 .map( params -> new InvalidationReason( aKey, params ) )
@@ -77,7 +79,8 @@ public final class Validator< T > implements ValidatorIf< T > {
      * {@inheritDoc}
      */
     @Override
-    public < S > ValidatorIf< T > validate( Function< T, S > aProjection, Predicate< S > aPredicate, TranslationKey aKey ) {
+    public < S > ValidatorIf< T > validate(
+            Function< T, S > aProjection, Predicate< S > aPredicate, TranslationKey aKey ) {
         return validate( aProjection.andThen( aPredicate::test )::apply, aKey, Set.of() );
     }
 
@@ -85,7 +88,9 @@ public final class Validator< T > implements ValidatorIf< T > {
      * {@inheritDoc}
      */
     @Override
-    public < S > ValidatorIf< T > validate( Function< T, S > aProjection, Predicate< S > aPredicate, TranslationKey aKey, Set< Function< T, Serializable > > aExcParams ) {
+    public < S > ValidatorIf< T > validate(
+            Function< T, S > aProjection, Predicate< S > aPredicate, TranslationKey aKey,
+            Set< Function< T, Serializable > > aExcParams ) {
         return validate( aProjection.andThen( aPredicate::test )::apply, aKey, aExcParams );
     }
 
@@ -111,14 +116,16 @@ public final class Validator< T > implements ValidatorIf< T > {
     }
 
     private Serializable[] mapExcParams( Set< Function< T, Serializable > > aExcParams, T aValue ) {
-        return aExcParams.stream()
+        return aExcParams
+                .stream()
                 .map( mapper -> mapper.apply( aValue ) )
                 .toArray( Serializable[]::new );
     }
 
     private ValidationException validationException() {
         var exception = new ValidationException();
-        var message = reasons.stream()
+        var message = reasons
+                .stream()
                 .map( InvalidationReason::getReason )
                 .collect( joining( ";", "[", "]" ) );
         exception.addSuppressed( new ValidationException( message ) );

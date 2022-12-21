@@ -22,36 +22,32 @@
  * SOFTWARE.
  */
 
-package com.github.pplociennik.util.utility;
+package com.github.pplociennik.commons.exc;
 
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import com.github.pplociennik.commons.lang.TranslationKey;
+
+import java.io.Serializable;
 
 /**
- * A utility providing custom collectors.
+ * An exception being thrown when the properties cannot be read.
  *
- * @author Created by: Pplociennik at 30.01.2022 10:10
+ * @author Created by: Pplociennik at 29.01.2022 20:19
  */
-public class CustomCollectors {
+public class ReadingPropertiesException extends BaseRuntimeException {
 
-    /**
-     * Returns a singleton element from {@link java.util.stream.Stream}.
-     *
-     * @param <T>
-     *         a type of the object being returned
-     * @return a singleton element from stream
-     * @throws {@link
-     *         IllegalStateException} when there is more or less elements in the stream than one
-     */
-    public static < T > Collector< T, ?, T > toSingleton() {
-        return Collectors.collectingAndThen(
-                Collectors.toList(),
-                list -> {
-                    if ( list.size() != 1 ) {
-                        throw new IllegalStateException( "There should be exactly one element in the stream!" );
-                    }
-                    return list.get( 0 );
-                }
-        );
+    public ReadingPropertiesException( String message ) {
+        super( message );
+    }
+
+    public ReadingPropertiesException( String message, Throwable cause ) {
+        super( message, cause );
+    }
+
+    public ReadingPropertiesException( Throwable cause ) {
+        super( cause );
+    }
+
+    public ReadingPropertiesException( TranslationKey aKey, Serializable... aArgs ) {
+        super( aKey, aArgs );
     }
 }

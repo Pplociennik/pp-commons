@@ -1,4 +1,4 @@
-package com.github.pplociennik.util.utility;
+package com.github.pplociennik.commons.utility;
 
 import org.springframework.lang.NonNull;
 
@@ -38,8 +38,12 @@ public class GenericPair< E, T > {
 
     @Override
     public boolean equals( Object aO ) {
-        if ( this == aO ) return true;
-        if ( aO == null || getClass() != aO.getClass() ) return false;
+        if ( this == aO ) {
+            return true;
+        }
+        if ( aO == null || getClass() != aO.getClass() ) {
+            return false;
+        }
         GenericPair< ?, ? > that = ( GenericPair< ?, ? > ) aO;
         return Objects.equals( former, that.former ) && Objects.equals( latter, that.latter );
     }
@@ -51,9 +55,6 @@ public class GenericPair< E, T > {
 
     @Override
     public String toString() {
-        return "GenericPair{" +
-                "former=" + former +
-                ", latter=" + latter +
-                '}';
+        return "GenericPair{" + "former=" + former + ", latter=" + latter + '}';
     }
 }
