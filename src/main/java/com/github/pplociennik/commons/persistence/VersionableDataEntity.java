@@ -3,6 +3,7 @@ package com.github.pplociennik.commons.persistence;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -19,7 +20,7 @@ public abstract class VersionableDataEntity extends ModifiableDataEntity {
      * A version of the object.
      */
     @Column( name = "VERSION", nullable = false, updatable = false )
-    @Getter( AccessLevel.PROTECTED )
-    @Setter( AccessLevel.PROTECTED )
+    @Getter( AccessLevel.PUBLIC )
+    @Setter( AccessLevel.PUBLIC )
     protected Integer version;
 }

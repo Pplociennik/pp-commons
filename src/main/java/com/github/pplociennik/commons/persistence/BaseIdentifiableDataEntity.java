@@ -3,6 +3,7 @@ package com.github.pplociennik.commons.persistence;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
@@ -20,16 +21,16 @@ public abstract class BaseIdentifiableDataEntity {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO )
     @Column( name = "ID", nullable = false )
-    @Getter( AccessLevel.PROTECTED )
-    @Setter( AccessLevel.PROTECTED )
+    @Getter( AccessLevel.PUBLIC )
+    @Setter( AccessLevel.PUBLIC )
     protected long id;
 
     /**
      * Unique String object identifier.
      */
     @Column( name = "UNIQUE_OBJECT_IDENTIFIER", nullable = false, unique = true, updatable = false )
-    @Getter( AccessLevel.PROTECTED )
-    @Setter( AccessLevel.PROTECTED )
+    @Getter( AccessLevel.PUBLIC )
+    @Setter( AccessLevel.PUBLIC )
     protected String uniqueObjectIdentifier;
 
 }
