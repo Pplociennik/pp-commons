@@ -24,7 +24,7 @@
 
 package utility;
 
-import com.github.pplociennik.util.utility.LanguageUtil;
+import com.github.pplociennik.commons.utility.LanguageUtil;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -34,8 +34,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Locale;
 
-import static com.github.pplociennik.util.lang.CommonsResExcMsgTranslationKey.READING_PROPERTIES_FAILED;
-import static com.github.pplociennik.util.lang.CommonsResExcMsgTranslationKey.UNEXPECTED_EXCEPTION;
+import static com.github.pplociennik.commons.lang.CommonsResExcMsgTranslationKey.READING_PROPERTIES_FAILED;
+import static com.github.pplociennik.commons.lang.CommonsResExcMsgTranslationKey.UNEXPECTED_EXCEPTION;
 
 /**
  * Unit tests for {@link LanguageUtil}.

@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-package com.github.pplociennik.util.utility;
+package com.github.pplociennik.commons.utility;
 
 
-import com.github.pplociennik.util.lang.TranslationKey;
+import com.github.pplociennik.commons.lang.TranslationKey;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.lang.NonNull;

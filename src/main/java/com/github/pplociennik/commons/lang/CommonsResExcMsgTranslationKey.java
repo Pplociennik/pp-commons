@@ -22,33 +22,31 @@
  * SOFTWARE.
  */
 
-package com.github.pplociennik.util.exc;
-
-import com.github.pplociennik.util.lang.TranslationKey;
-
-import java.io.Serializable;
+package com.github.pplociennik.commons.lang;
 
 /**
- * An exception being thrown when the validation process fails.
+ * An enum holding keys for identifying exceptions' translation messages.
  *
- * @author Created by: Pplociennik at 22.12.2021 19:48
+ * @author Created by: Pplociennik at 22.12.2021 20:07
  */
-public class ValidationException extends BaseRuntimeException {
+public enum CommonsResExcMsgTranslationKey implements TranslationKey {
 
-    public ValidationException( final TranslationKey aKey, final Serializable... aArgs ) {
-        super( aKey, aArgs );
-    }
+    READING_PROPERTIES_FAILED,
 
-    public ValidationException() {
-        super( "Validation failed!" );
-    }
+    /**
+     * Unexpected exception being thrown.
+     */
+    UNEXPECTED_EXCEPTION;
 
-    public ValidationException( String aMessage ) {
-        super( aMessage );
-    }
+    private static final String EXCEPTIONS_TRANSLATIONS_BASENAME_PROPERTY = "lang/CommonsResExcMsg";
 
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    @Override
+    public String getTranslationsSourcePropertyName() {
+        return EXCEPTIONS_TRANSLATIONS_BASENAME_PROPERTY;
     }
 }

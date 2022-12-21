@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package com.github.pplociennik.util.utility;
+package com.github.pplociennik.commons.utility;
 
 import java.util.Collection;
 

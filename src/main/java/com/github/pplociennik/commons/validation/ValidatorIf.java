@@ -22,9 +22,9 @@
  * SOFTWARE.
  */
 
-package com.github.pplociennik.util.validation;
+package com.github.pplociennik.commons.validation;
 
-import com.github.pplociennik.util.lang.TranslationKey;
+import com.github.pplociennik.commons.lang.TranslationKey;
 import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
@@ -37,10 +37,9 @@ import static java.util.Collections.singleton;
 import static java.util.Objects.requireNonNull;
 
 /**
- * Base Validator interface for validation chaining.
- * Enables a possibility for preparing a chain which performs all the specified validations
- * and wraps possible on-way exceptions being thrown during the process as they are being presented then
- * as suppressed in a one clean detailed exception message.
+ * Base Validator interface for validation chaining. Enables a possibility for preparing a chain which performs all the
+ * specified validations and wraps possible on-way exceptions being thrown during the process as they are being
+ * presented then as suppressed in a one clean detailed exception message.
  *
  * @author Created by: Pplociennik at 22.12.2021 19:01
  */
@@ -90,7 +89,9 @@ public interface ValidatorIf< T > {
      *         Parameters for exception's message.
      * @return {@link ValidatorIf}.
      */
-    ValidatorIf< T > validate( @NonNull Predicate< T > aPredicate, @NonNull TranslationKey aKey, @NonNull Set< Function< T, Serializable > > aExcParams );
+    ValidatorIf< T > validate(
+            @NonNull Predicate< T > aPredicate, @NonNull TranslationKey aKey,
+            @NonNull Set< Function< T, Serializable > > aExcParams );
 
     /**
      * Validates the object after initial object's projection to another type.
@@ -107,10 +108,12 @@ public interface ValidatorIf< T > {
      *         An object being mapped.
      * @return {@link ValidatorIf}.
      */
-    < S > ValidatorIf< T > validate( @NonNull Function< T, S > aProjection, @NonNull Predicate< S > aPredicate, @NonNull TranslationKey aKey );
+    < S > ValidatorIf< T > validate(
+            @NonNull Function< T, S > aProjection, @NonNull Predicate< S > aPredicate, @NonNull TranslationKey aKey );
 
     /**
-     * Validates the object after initial object's projection to another type. Lets to parameterize the exception being thrown.
+     * Validates the object after initial object's projection to another type. Lets to parameterize the exception being
+     * thrown.
      *
      * @param aProjection
      *         A function defining the projection process.
@@ -126,8 +129,9 @@ public interface ValidatorIf< T > {
      *         An object being mapped.
      * @return {@link ValidatorIf}.
      */
-    < S > ValidatorIf< T > validate( @NonNull Function< T, S > aProjection, @NonNull Predicate< S > aPredicate, @NonNull TranslationKey aKey,
-                                     @NonNull Set< Function< T, Serializable > > aExcParams );
+    < S > ValidatorIf< T > validate(
+            @NonNull Function< T, S > aProjection, @NonNull Predicate< S > aPredicate, @NonNull TranslationKey aKey,
+            @NonNull Set< Function< T, Serializable > > aExcParams );
 
     /**
      * Runs the specified validation chain.

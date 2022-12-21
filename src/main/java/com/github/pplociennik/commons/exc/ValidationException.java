@@ -22,46 +22,33 @@
  * SOFTWARE.
  */
 
-package com.github.pplociennik.util.validation;
+package com.github.pplociennik.commons.exc;
 
-import com.github.pplociennik.util.exc.ValidationException;
-import com.github.pplociennik.util.lang.TranslationKey;
-import org.springframework.lang.NonNull;
+import com.github.pplociennik.commons.lang.TranslationKey;
 
 import java.io.Serializable;
 
-import static com.github.pplociennik.util.utility.LanguageUtil.getLocalizedMessage;
-
-
 /**
- * Presents the reason of the validation process failure. Holds an exception with parameterized message.
+ * An exception being thrown when the validation process fails.
  *
- * @author Created by: Pplociennik at 22.12.2021 19:32
+ * @author Created by: Pplociennik at 22.12.2021 19:48
  */
-public class InvalidationReason {
+public class ValidationException extends BaseRuntimeException {
 
-    private ValidationException exception;
-
-    public InvalidationReason( @NonNull TranslationKey aKey, @NonNull Serializable[] aParams ) {
-        this.exception = new ValidationException( getLocalizedMessage( aKey, aParams ) );
+    public ValidationException( final TranslationKey aKey, final Serializable... aArgs ) {
+        super( aKey, aArgs );
     }
 
-    public String getReason() {
-        return exception.getMessage();
+    public ValidationException() {
+        super( "Validation failed!" );
     }
 
-    public StackTraceElement[] getStackTrace() {
-        return exception.getStackTrace();
-    }
-
-    public Throwable[] getSuppressed() {
-        return exception.getSuppressed();
+    public ValidationException( String aMessage ) {
+        super( aMessage );
     }
 
     @Override
     public String toString() {
-        return "InvalidationReason{" +
-                "exception=" + exception +
-                '}';
+        return super.toString();
     }
 }
