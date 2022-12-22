@@ -19,7 +19,7 @@ public abstract class BaseIdentifiableDataEntity {
      */
     @Id
     @GeneratedValue( strategy = GenerationType.SEQUENCE )
-    @Column( name = "ID", nullable = false )
+    @Column( name = "ID", nullable = false, unique = true, updatable = false )
     @Getter( AccessLevel.PUBLIC )
     @Setter( AccessLevel.PUBLIC )
     protected long id;
