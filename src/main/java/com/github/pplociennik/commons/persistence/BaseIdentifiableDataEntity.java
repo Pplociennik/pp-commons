@@ -3,7 +3,6 @@ package com.github.pplociennik.commons.persistence;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
@@ -19,7 +18,7 @@ public abstract class BaseIdentifiableDataEntity {
      * Number object id.
      */
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.SEQUENCE )
     @Column( name = "ID", nullable = false )
     @Getter( AccessLevel.PUBLIC )
     @Setter( AccessLevel.PUBLIC )
