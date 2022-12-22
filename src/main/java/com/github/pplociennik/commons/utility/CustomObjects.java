@@ -25,6 +25,8 @@
 package com.github.pplociennik.commons.utility;
 
 import java.util.Collection;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
 
@@ -87,5 +89,17 @@ public class CustomObjects {
         }
 
         return ts;
+    }
+
+    /**
+     * Validates if any of the given objects is null.
+     *
+     * @param aObjects
+     *         object to be validated.
+     */
+    public static void validateNonNull( Object... aObjects ) {
+        Stream
+                .of( aObjects )
+                .forEach( Objects::requireNonNull );
     }
 }
