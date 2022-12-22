@@ -29,7 +29,7 @@ public class UniqueIdentifierGenerator {
 
         var currentDateTime = Instant.now();
 
-        var className = aObjectType.getName();
+        var className = aObjectType.getSimpleName();
         var currentDateFormatted = getFormattedDate( currentDateTime );
         var currentTimeFormatted = getFormattedTime( currentDateTime );
 
