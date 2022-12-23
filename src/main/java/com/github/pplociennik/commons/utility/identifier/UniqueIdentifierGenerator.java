@@ -46,7 +46,6 @@ public class UniqueIdentifierGenerator {
     }
 
     private static String getFormattedTime( Instant aCurrentDateTime ) {
-        // TODO: Refactor to use mechanism for getting environment properties.
         var formatter = DateTimeFormatter
                 .ofPattern( TIME_FORMAT )
                 .withZone( ZoneId.systemDefault() );
@@ -54,7 +53,6 @@ public class UniqueIdentifierGenerator {
     }
 
     private static String getFormattedDate( Instant aCurrentDateTime ) {
-        // TODO: Refactor to use mechanism for getting environment properties.
         var formatter = DateTimeFormatter
                 .ofPattern( DATE_FORMAT )
                 .withZone( ZoneId.systemDefault() );
