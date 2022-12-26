@@ -24,8 +24,11 @@
 
 package com.github.pplociennik.commons.utility;
 
+import org.springframework.lang.NonNull;
+
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static java.util.Objects.requireNonNull;
@@ -101,5 +104,19 @@ public class CustomObjects {
         Stream
                 .of( aObjects )
                 .forEach( Objects::requireNonNull );
+    }
+
+    /**
+     * Unwraps the value of the optional.
+     *
+     * @param aOptionalObject
+     *         an optional object to be unwrapped.
+     * @param <T>
+     *         the type of the optional object.
+     * @return a value of the optional if present or null.
+     */
+    public static < T > T unwrap( @NonNull Optional< T > aOptionalObject ) {
+        requireNonNull( aOptionalObject );
+        return aOptionalObject.orElse( null );
     }
 }
