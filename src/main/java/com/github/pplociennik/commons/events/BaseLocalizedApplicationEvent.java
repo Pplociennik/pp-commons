@@ -14,7 +14,7 @@ import static java.util.Objects.requireNonNull;
  *
  * @author Created by: Pplociennik at 06.08.2022 22:58
  */
-public abstract class BaseLocalizedApplicationEvent extends ApplicationEvent {
+public abstract class BaseLocalizedApplicationEvent extends ApplicationEvent implements PublishableEvent {
 
     @Getter( AccessLevel.PUBLIC )
     protected final Locale locale;
