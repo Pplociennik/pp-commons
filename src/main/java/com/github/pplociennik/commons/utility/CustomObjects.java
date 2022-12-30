@@ -24,8 +24,6 @@
 
 package com.github.pplociennik.commons.utility;
 
-import org.springframework.lang.NonNull;
-
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
@@ -115,8 +113,25 @@ public class CustomObjects {
      *         the type of the optional object.
      * @return a value of the optional if present or null.
      */
-    public static < T > T unwrap( @NonNull Optional< T > aOptionalObject ) {
+    public static < T > T unwrap( Optional< T > aOptionalObject ) {
         requireNonNull( aOptionalObject );
         return aOptionalObject.orElse( null );
+    }
+
+    /**
+     * Validates an object's type.
+     *
+     * @param aSourceObject
+     *         an object to be validated.
+     * @param aRequiredType
+     *         the expected type of the object.
+     * @throws IllegalArgumentException
+     *         when the object has incorrect type.
+     */
+    public static void validateType( Object aSourceObject, Class< ? > aRequiredType ) {
+        Optional
+                .of( aSourceObject )
+                .filter( aRequiredType::isInstance )
+                .orElseThrow( () -> new IllegalArgumentException( "Not a valid object type." ) );
     }
 }
