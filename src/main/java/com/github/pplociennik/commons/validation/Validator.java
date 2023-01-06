@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Przemysław Płóciennik
+ * Copyright (c) 2023 Przemysław Płóciennik
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,109 +26,120 @@ package com.github.pplociennik.commons.validation;
 
 import com.github.pplociennik.commons.exc.ValidationException;
 import com.github.pplociennik.commons.lang.TranslationKey;
+import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static java.util.stream.Collectors.joining;
+import static java.util.Collections.singleton;
+import static java.util.Objects.requireNonNull;
 
 /**
- * Implementation of {@link ValidatorIf} giving a possibility to enable validation chaining.
+ * Base Validator interface for validation chaining. It lets preparing a chain which performs all the specified
+ * validations and wraps possible on-way exceptions being thrown during the process as they are being presented then as
+ * suppressed in a one clean detailed exception message.
  *
- * @author Created by: Pplociennik at 22.12.2021 19:12
+ * @author Created by: Pplociennik at 22.12.2021 19:01
  */
-public final class Validator< T > implements ValidatorIf< T > {
+public interface Validator< T > {
 
-    private final Collection< T > values;
-    private final List< InvalidationReason > reasons = new ArrayList<>();
-
-    Validator( final Collection< T > aValues ) {
-        values = aValues;
+    /**
+     * A fabric method producing a validator for the singleton collection of the objects of the specified type.
+     *
+     * @param aSingleValue
+     *         A single generic object to be validated.
+     * @return A {@link Validator} object for the specified object's type.
+     */
+    static < T > Validator< T > of( @NonNull T aSingleValue ) {
+        return new ValidatorImpl<>( singleton( requireNonNull( aSingleValue ) ) );
     }
 
     /**
-     * {@inheritDoc}
+     * A fabric method producing a validator for the specified values of the type.
+     *
+     * @param aValues
+     *         A collection of objects to be validated.
+     * @return A {@link Validator} object for the specified objects' type.
      */
-    @Override
-    public ValidatorIf< T > validate( Predicate aPredicate, TranslationKey aKey ) {
-        this.validate( aPredicate, aKey, Set.of() );
-        return this;
+    static < T > Validator< T > of( @NonNull Collection< T > aValues ) {
+        return new ValidatorImpl<>( aValues );
     }
 
     /**
-     * {@inheritDoc}
+     * Validates the objects with given predicate.
+     *
+     * @param aPredicate
+     *         A condition.
+     * @param aKey
+     *         A key for exception's message.
+     * @return {@link Validator}.
      */
-    @Override
-    public ValidatorIf< T > validate(
-            Predicate< T > aPredicate, TranslationKey aKey, Set< Function< T, Serializable > > aExcParams ) {
-        values
-                .stream()
-                .filter( aPredicate.negate() )
-                .map( value -> mapExcParams( aExcParams, value ) )
-                .map( params -> new InvalidationReason( aKey, params ) )
-                .forEach( reasons::add );
-        return this;
-    }
+    Validator< T > validate( @NonNull Predicate< T > aPredicate, @NonNull TranslationKey aKey );
 
     /**
-     * {@inheritDoc}
+     * Validates the objects with given predicate. Lets to parameterize the exception being thrown.
+     *
+     * @param aPredicate
+     *         A condition.
+     * @param aKey
+     *         A key for exception's message.
+     * @param aExcParams
+     *         Parameters for exception's message.
+     * @return {@link Validator}.
      */
-    @Override
-    public < S > ValidatorIf< T > validate(
-            Function< T, S > aProjection, Predicate< S > aPredicate, TranslationKey aKey ) {
-        return validate( aProjection.andThen( aPredicate::test )::apply, aKey, Set.of() );
-    }
+    Validator< T > validate(
+            @NonNull Predicate< T > aPredicate, @NonNull TranslationKey aKey,
+            @NonNull Set< Function< T, Serializable > > aExcParams );
 
     /**
-     * {@inheritDoc}
+     * Validates the object after initial object's projection to another type.
+     *
+     * @param aProjection
+     *         A function defining the projection process.
+     * @param aPredicate
+     *         A condition.
+     * @param aKey
+     *         A key for exception's message.
+     * @return {@link Validator}.
      */
-    @Override
-    public < S > ValidatorIf< T > validate(
-            Function< T, S > aProjection, Predicate< S > aPredicate, TranslationKey aKey,
-            Set< Function< T, Serializable > > aExcParams ) {
-        return validate( aProjection.andThen( aPredicate::test )::apply, aKey, aExcParams );
-    }
+    < S > Validator< T > validate(
+            @NonNull Function< T, S > aProjection, @NonNull Predicate< S > aPredicate, @NonNull TranslationKey aKey );
 
     /**
-     * {@inheritDoc}
+     * Validates the object after initial object's projection to another type. Lets to parameterize the exception being
+     * thrown.
+     *
+     * @param aProjection
+     *         A function defining the projection process.
+     * @param aPredicate
+     *         A condition.
+     * @param aKey
+     *         A key for exception's message.
+     * @param aExcParams
+     *         Parameters for exception's message.
+     * @return {@link Validator}.
      */
-    @Override
-    public void perform() {
-        if ( ! reasons.isEmpty() ) {
-            throw validationException();
-        }
-    }
+    < S > Validator< T > validate(
+            @NonNull Function< T, S > aProjection, @NonNull Predicate< S > aPredicate, @NonNull TranslationKey aKey,
+            @NonNull Set< Function< T, Serializable > > aExcParams );
 
     /**
-     * {@inheritDoc}
+     * Runs the specified validation chain.
+     *
+     * @throws ValidationException
+     *         When the validation process fails.
      */
-    @Override
-    public ValidatorIf< T > performAndThen() {
-        if ( reasons.isEmpty() ) {
-            return this;
-        }
-        throw validationException();
-    }
+    void perform();
 
-    private Serializable[] mapExcParams( Set< Function< T, Serializable > > aExcParams, T aValue ) {
-        return aExcParams
-                .stream()
-                .map( mapper -> mapper.apply( aValue ) )
-                .toArray( Serializable[]::new );
-    }
-
-    private ValidationException validationException() {
-        var exception = new ValidationException();
-        var message = reasons
-                .stream()
-                .map( InvalidationReason::getReason )
-                .collect( joining( ";", "[", "]" ) );
-        exception.addSuppressed( new ValidationException( message ) );
-        return exception;
-    }
+    /**
+     * Runs the specified validation chain and the next one specified.
+     *
+     * @return {@link Validator}.
+     * @throws ValidationException
+     *         When the validation process fails.
+     */
+    Validator< T > performAndThen();
 }
