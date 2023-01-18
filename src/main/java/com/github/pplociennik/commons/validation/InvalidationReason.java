@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Przemysław Płóciennik
+ * Copyright (c) 2023 Przemysław Płóciennik
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -34,26 +34,44 @@ import static com.github.pplociennik.commons.utility.LanguageUtil.getLocalizedMe
 
 
 /**
- * Presents the reason of the validation process failure. Holds an exception with parameterized message.
+ * Presents the reason of the validation process failure. Holds an exception with parameterized localized message.
  *
  * @author Created by: Pplociennik at 22.12.2021 19:32
  */
 public class InvalidationReason {
 
+    /**
+     * The exception causing the invalidation.
+     */
     private final ValidationException exception;
 
     public InvalidationReason( @NonNull TranslationKey aKey, @NonNull Serializable[] aParams ) {
         this.exception = new ValidationException( getLocalizedMessage( aKey, aParams ) );
     }
 
+    /**
+     * Returns a localized message being the reason of the invalidation.
+     *
+     * @return a localized exception message.
+     */
     public String getReason() {
         return exception.getMessage();
     }
 
+    /**
+     * Returns a stack trace of the exception.
+     *
+     * @return a string being the stack trace of the exception.
+     */
     public StackTraceElement[] getStackTrace() {
         return exception.getStackTrace();
     }
 
+    /**
+     * Returns a table of the suppressed exceptions.
+     *
+     * @return a table of the exceptions being suppressed.
+     */
     public Throwable[] getSuppressed() {
         return exception.getSuppressed();
     }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Przemysław Płóciennik
+ * Copyright (c) 2023 Przemysław Płóciennik
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,10 +31,13 @@ package com.github.pplociennik.commons.lang;
  */
 public enum CommonsResExcMsgTranslationKey implements TranslationKey {
 
+    /**
+     * Properties cannot be read from file: {0}.
+     */
     READING_PROPERTIES_FAILED,
 
     /**
-     * Unexpected exception being thrown.
+     * Unexpected exception! Reason: {0}
      */
     UNEXPECTED_EXCEPTION;
 

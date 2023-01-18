@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Przemysław Płóciennik
+ * Copyright (c) 2023 Przemysław Płóciennik
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,16 +35,16 @@ import java.io.Serializable;
  */
 public class ReadingPropertiesException extends BaseRuntimeException {
 
-    public ReadingPropertiesException( String message ) {
-        super( message );
+    public ReadingPropertiesException( String aMessage ) {
+        super( aMessage );
     }
 
-    public ReadingPropertiesException( String message, Throwable cause ) {
-        super( message, cause );
+    public ReadingPropertiesException( String aMessage, Throwable aCause ) {
+        super( aMessage, aCause );
     }
 
-    public ReadingPropertiesException( Throwable cause ) {
-        super( cause );
+    public ReadingPropertiesException( Throwable aCause ) {
+        super( aCause );
     }
 
     public ReadingPropertiesException( TranslationKey aKey, Serializable... aArgs ) {

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2021 Przemysław Płóciennik
+ * Copyright (c) 2023 Przemysław Płóciennik
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -70,7 +70,7 @@ class LanguageUtilTest {
     @Test
     void shouldReturnGermanTranslation_whenLocaleSetToGerman() {
 
-        var expectedTranslation = "Eigenschaften kÃ¶nnen nicht aus Datei: {0} gelesen werden. ";
+        var expectedTranslation = "Eigenschaften können nicht aus der Datei: {0} gelesen werden.";
 
         var localeForBeingSet = Locale.GERMAN;
         LocaleContextHolder.setLocale( localeForBeingSet );
@@ -82,7 +82,7 @@ class LanguageUtilTest {
     @Test
     void shouldReturnPolishTranslation_whenLocaleSetToPolish() {
 
-        var expectedTranslation = "Nie moÅ¼na wczytaÄ\u0087 parametrÃ³w z pliku: {0}.";
+        var expectedTranslation = "Nie można wczytać parametrów z pliku: {0}.";
 
         var localeForBeingSet = new Locale( "pl" );
         LocaleContextHolder.setLocale( localeForBeingSet );
