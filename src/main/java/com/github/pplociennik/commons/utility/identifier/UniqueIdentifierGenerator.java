@@ -63,23 +63,40 @@ public class UniqueIdentifierGenerator {
     /**
      * Returns the unique identifier for the object basing on the object's type and the unique specific information.
      *
-     * @param aObjectType
-     *         a type of the object being identified.
-     * @param aAdditionalSpecificString
+     * @param aObject
+     *         an object being identified.
+     * @param aObjectTypeSpecifier
      *         a special specific information according to the object being identified.
      * @return a unique identifier for the object.
      */
-    public static String generateIdentifier(
-            @NonNull Class< ? > aObjectType, @NonNull String aAdditionalSpecificString ) {
-        validateNonNull( aObjectType, aAdditionalSpecificString );
+    public static < T > String generateIdentifier(
+            @NonNull T aObject, @NonNull ObjectTypeSpecifier< T > aObjectTypeSpecifier ) {
+        validateNonNull( aObject, aObjectTypeSpecifier );
 
         var currentDateTime = Instant.now();
 
-        var className = aObjectType.getSimpleName();
+        var className = aObject
+                .getClass()
+                .getSimpleName();
         var currentDateFormatted = getFormattedDate( currentDateTime );
         var currentTimeFormatted = getFormattedTime( currentDateTime );
 
-        return buildIdentifier( className, currentDateFormatted, currentTimeFormatted, aAdditionalSpecificString );
+        return buildIdentifier( className, currentDateFormatted, currentTimeFormatted,
+                                aObjectTypeSpecifier.get( aObject ) );
+    }
+
+    public static < T > String generateCustomIdentifier(
+            @NonNull String aCustomObjectTypeName, @NonNull T aObject,
+            @NonNull ObjectTypeSpecifier< T > aObjectTypeSpecifier ) {
+        validateNonNull( aCustomObjectTypeName, aObject, aObjectTypeSpecifier );
+
+        var currentDateTime = Instant.now();
+
+        var currentDateFormatted = getFormattedDate( currentDateTime );
+        var currentTimeFormatted = getFormattedTime( currentDateTime );
+
+        return buildIdentifier( aCustomObjectTypeName, currentDateFormatted, currentTimeFormatted,
+                                aObjectTypeSpecifier.get( aObject ) );
     }
 
     private static String buildIdentifier(
