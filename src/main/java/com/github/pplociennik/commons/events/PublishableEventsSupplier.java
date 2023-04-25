@@ -24,28 +24,43 @@
  *   -->
  */
 
-package com.github.pplociennik.commons.persistence;
+package com.github.pplociennik.commons.events;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.lang.NonNull;
+
+import java.util.Locale;
 
 /**
- * A base entity for unique objects identification.
+ * An interface sharing methods for creating {@link PublishableEvent} typed objects basing on the source objects.
  *
- * @author Created by: Pplociennik at 21.12.2022 21:27
+ * @author Created by: Pplociennik at 20.04.2023 18:24
  */
-@MappedSuperclass
-public abstract class BaseIdentifiableDataEntity {
+public interface PublishableEventsSupplier {
 
     /**
-     * Unique String object identifier.
+     * Returns an event based on the source object. The source object needs to be of the proper type defined in the
+     * supplier's implementation.
+     *
+     * @param aSource
+     *         a source object.
+     * @return the {@link PublishableEvent} typed object to be published.
      */
-    @Column(name = "UNIQUE_OBJECT_IDENTIFIER", nullable = false, unique = true, updatable = false)
-    @Getter(AccessLevel.PUBLIC)
-    @Setter(AccessLevel.PUBLIC)
-    protected String uniqueObjectIdentifier;
+    PublishableEvent getEvent( @NonNull Object aSource );
 
+    /**
+     * Returns an event based on the source object and using a locale specified. The source object needs to be of the
+     * proper type defined in the supplier's implementation.
+     *
+     * @param aSource
+     *         a source object.
+     * @return the {@link PublishableEvent} typed object to be published.
+     */
+    PublishableEvent getEvent( @NonNull Object aSource, @NonNull Locale aLocale );
+
+    /**
+     * Returns a class being the required type of the source object.
+     *
+     * @return a required type of the source object.
+     */
+    Class< ? > getRequiredSourceType();
 }
