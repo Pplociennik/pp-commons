@@ -59,6 +59,10 @@
             <version>${version.lombok}</version>
             <optional>false</optional>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
 
     </dependencies>
 
