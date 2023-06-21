@@ -26,11 +26,9 @@
 
 package com.github.pplociennik.commons.persistence;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+
+import java.io.Serializable;
 
 /**
  * A base entity for unique objects identification.
@@ -38,14 +36,5 @@ import lombok.Setter;
  * @author Created by: Pplociennik at 21.12.2022 21:27
  */
 @MappedSuperclass
-public abstract class BaseIdentifiableDataEntity {
-
-    /**
-     * Unique String object identifier.
-     */
-    @Column(name = "UNIQUE_OBJECT_IDENTIFIER", nullable = false, unique = true, updatable = false)
-    @Getter(AccessLevel.PUBLIC)
-    @Setter(AccessLevel.PUBLIC)
-    protected String uniqueObjectIdentifier;
-
+public abstract class BaseIdentifiableDataEntity implements Serializable {
 }
