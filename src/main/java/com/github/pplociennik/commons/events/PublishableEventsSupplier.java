@@ -30,6 +30,8 @@ import org.springframework.lang.NonNull;
 
 import java.util.Locale;
 
+import static com.github.pplociennik.commons.utility.CustomObjects.validateType;
+
 /**
  * An interface sharing methods for creating {@link PublishableEvent} typed objects basing on the source objects.
  *
@@ -63,4 +65,16 @@ public interface PublishableEventsSupplier {
      * @return a required type of the source object.
      */
     Class< ? > getRequiredSourceType();
+
+    /**
+     * Validates the type of the source object.
+     *
+     * @param aSource
+     *         a source object to be validated.
+     * @throws IllegalArgumentException
+     *         when the type is incorrect.
+     */
+    default void validateSourceType( @NonNull Object aSource ) {
+        validateType( aSource, getRequiredSourceType() );
+    }
 }
