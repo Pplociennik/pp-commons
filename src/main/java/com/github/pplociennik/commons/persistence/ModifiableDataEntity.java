@@ -27,10 +27,16 @@
 package com.github.pplociennik.commons.persistence;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.ZonedDateTime;
 
@@ -40,21 +46,37 @@ import java.time.ZonedDateTime;
  * @author Created by: Pplociennik at 21.12.2022 21:39
  */
 @MappedSuperclass
+@Getter
+@Setter
+@ToString
+@EntityListeners( AuditingEntityListener.class )
 public abstract class ModifiableDataEntity extends BaseIdentifiableDataEntity {
 
     /**
      * A date and time of the object's creation.
      */
-    @Column( name = "CREATION_DATE", nullable = false, updatable = false )
-    @Getter( AccessLevel.PUBLIC )
-    @Setter( AccessLevel.PUBLIC )
-    protected ZonedDateTime creationDate;
+    @Column( name = "CREATED_AT", nullable = false, updatable = false )
+    @CreatedDate
+    private ZonedDateTime createdAt;
+
+    /**
+     * A name of user being the creator.
+     */
+    @Column( name = "CREATED_BY", nullable = false, updatable = false )
+    @CreatedBy
+    private String createdBy;
 
     /**
      * A date and time of the object's last modification.
      */
-    @Column( name = "LAST_MODIFICATION" )
-    @Getter( AccessLevel.PUBLIC )
-    @Setter( AccessLevel.PUBLIC )
-    protected ZonedDateTime lastModification;
+    @Column( name = "LAST_MODIFIED_AT" )
+    @LastModifiedDate
+    private ZonedDateTime lastModifiedAt;
+
+    /**
+     * A name of user being the last modifier.
+     */
+    @Column( name = "LAST_MODIFIED_BY" )
+    @LastModifiedBy
+    private String lastModifiedBy;
 }
