@@ -27,17 +27,45 @@
 package com.github.pplociennik.commons.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.springframework.http.HttpStatus;
 
-import java.io.Serializable;
+import java.time.ZonedDateTime;
 
 /**
- * A base abstract class for Data Transfer Objects definition.
+ * A data transfer object holding tha data about the response of the request when the error has occurred during the execution process.
  *
- * @author Created by: Pplociennik at 20.04.2023 18:03
+ * @author Created by: Pplociennik at 14.03.2024 18:40
  */
 @Schema(
-        name = "Base abstract schema to be extended.",
-        description = "Base schema being the base for the other ones' creation."
+        name = "ErrorResponse",
+        description = "Schema for holding the response information data when error has occurred during the execution."
 )
-public class BaseAbstractExtendableDto implements Serializable {
+@EqualsAndHashCode( callSuper = true )
+@Data
+@AllArgsConstructor
+public class ErrorResponseDto extends BaseAbstractExtendableDto {
+
+    @Schema(
+            description = "API path invoked by the client."
+    )
+    private String apiPath;
+
+    @Schema(
+            description = "Error code representing the error which occurred."
+    )
+    private HttpStatus errorCode;
+
+    @Schema(
+            description = "Error message representing the error which occurred."
+    )
+    private String errorMessage;
+
+    @Schema(
+            description = "A timestamp of the error's occurrence."
+    )
+    private ZonedDateTime errorTime;
+
 }

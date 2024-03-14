@@ -27,17 +27,29 @@
 package com.github.pplociennik.commons.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
- * A base abstract class for Data Transfer Objects definition.
+ * A data transfer object holding the data describing the response of the request.
  *
- * @author Created by: Pplociennik at 20.04.2023 18:03
+ * @author Created by: Pplociennik at 14.03.2024 18:29
  */
 @Schema(
-        name = "Base abstract schema to be extended.",
-        description = "Base schema being the base for the other ones' creation."
+        name = "Response to a request.",
+        description = "Schema for holding the response information data."
 )
-public class BaseAbstractExtendableDto implements Serializable {
+@EqualsAndHashCode( callSuper = true )
+@Data
+@AllArgsConstructor
+public class ResponseDto extends BaseAbstractExtendableDto {
+
+    @Schema( description = "A status code of the response." )
+    private String statusCode;
+
+    @Schema( description = "A status message of the response." )
+    private String statusMsg;
 }
+
+

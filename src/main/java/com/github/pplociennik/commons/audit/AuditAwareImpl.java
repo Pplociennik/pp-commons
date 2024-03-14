@@ -32,7 +32,7 @@ import org.springframework.data.domain.AuditorAware;
 import java.util.Optional;
 
 /**
- * A default auditor.
+ * A default auditor. Needs to be configured in the spring application starter using the @EnableJpaAuditing annotation.
  *
  * @author Created by: Pplociennik at 10.03.2024 14:27
  */
