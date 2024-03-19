@@ -70,7 +70,7 @@ public class LanguageUtil {
      * @return the translated message
      */
     public static String getLocalizedMessage( TranslationKey aKey ) {
-        return getLocalizedMessage( aKey, ( Object[] ) null );
+        return getLocalizedMessage( aKey, new Object[]{} );
     }
 
     /**
@@ -82,7 +82,7 @@ public class LanguageUtil {
      *         message arguments
      * @return the translated message
      */
-    public static String getLocalizedMessage( TranslationKey aKey, Object[] args ) {
+    public static String getLocalizedMessage( TranslationKey aKey, Object... args ) {
         var messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename( aKey.getTranslationsSourcePropertyName() );
         return messageSource.getMessage( aKey.toString(), args, getLocale() );
@@ -98,7 +98,7 @@ public class LanguageUtil {
      * @return the translated message
      */
     public static String getLocalizedMessage( TranslationKey aKey, Locale aLocale ) {
-        return getLocalizedMessage( aKey, aLocale, null );
+        return getLocalizedMessage( aKey, aLocale, new Object[]{} );
     }
 
     /**
@@ -112,7 +112,7 @@ public class LanguageUtil {
      *         message arguments
      * @return the translated message
      */
-    public static String getLocalizedMessage( TranslationKey aKey, Locale aLocale, Object[] args ) {
+    public static String getLocalizedMessage( TranslationKey aKey, Locale aLocale, Object... args ) {
         var messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename( aKey.getTranslationsSourcePropertyName() );
         return messageSource.getMessage( aKey.toString(), args, aLocale );

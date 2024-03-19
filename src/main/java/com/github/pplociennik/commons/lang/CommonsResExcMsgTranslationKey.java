@@ -37,6 +37,11 @@ public enum CommonsResExcMsgTranslationKey implements TranslationKey {
     READING_PROPERTIES_FAILED,
 
     /**
+     * Resource '{0}' not found with the given input data '{1}' : '{2}'.
+     */
+    RESOURCE_DOES_NOT_EXIST,
+
+    /**
      * Unexpected exception! Reason: {0}
      */
     UNEXPECTED_EXCEPTION;
