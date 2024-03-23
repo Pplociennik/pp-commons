@@ -45,10 +45,14 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 public class ResponseDto extends BaseAbstractExtendableDto {
 
-    @Schema( description = "A status code of the response." )
+    @Schema(
+            description = "A status code of the response.",
+            example = "200" )
     private String statusCode;
 
-    @Schema( description = "A status message of the response." )
+    @Schema(
+            description = "A status message of the response.",
+            example = "Resource created successfully." )
     private String statusMsg;
 }
 

@@ -49,22 +49,26 @@ import java.time.ZonedDateTime;
 public class ErrorResponseDto extends BaseAbstractExtendableDto {
 
     @Schema(
-            description = "API path invoked by the client."
+            description = "API path invoked by the client.",
+            example = "/api/users/create"
     )
     private String apiPath;
 
     @Schema(
-            description = "Error code representing the error which occurred."
+            description = "Error code representing the error which occurred.",
+            example = "500"
     )
     private HttpStatus errorCode;
 
     @Schema(
-            description = "Error message representing the error which occurred."
+            description = "Error message representing the error which occurred.",
+            example = "Internal Server Error: Null Pointer Exception."
     )
     private String errorMessage;
 
     @Schema(
-            description = "A timestamp of the error's occurrence."
+            description = "A timestamp of the error's occurrence.",
+            example = "2024-03-23T18:00:00.000"
     )
     private ZonedDateTime errorTime;
 
