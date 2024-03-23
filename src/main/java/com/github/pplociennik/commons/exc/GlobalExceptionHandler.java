@@ -46,6 +46,30 @@ import static com.github.pplociennik.commons.lang.CommonsResExcMsgTranslationKey
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
+     * Handles the {@link ResourceNotFoundException}.
+     *
+     * @param aException
+     *         the exception being thrown during the system work.
+     * @param aWebRequest
+     *         the web request which execution was interrupted by the exception.
+     * @return {@link ErrorResponseDto}.
+     */
+    @ExceptionHandler( ResourceNotFoundException.class )
+    public ResponseEntity< ErrorResponseDto > handleResourceNotFoundException( ResourceNotFoundException aException,
+                                                                               WebRequest aWebRequest ) {
+        ErrorResponseDto errorResponseDTO = new ErrorResponseDto(
+                aWebRequest.getDescription( false ),
+                HttpStatus.NOT_FOUND,
+                aException.getMessage(),
+                ZonedDateTime.now()
+        );
+
+        aException.printStackTrace();
+
+        return new ResponseEntity<>( errorResponseDTO, HttpStatus.NOT_FOUND );
+    }
+
+    /**
      * Handles the unexpected exception.
      *
      * @param aException

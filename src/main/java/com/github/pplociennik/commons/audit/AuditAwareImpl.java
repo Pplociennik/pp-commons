@@ -27,7 +27,6 @@
 package com.github.pplociennik.commons.audit;
 
 import org.springframework.data.domain.AuditorAware;
-import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
@@ -36,7 +35,6 @@ import java.util.Optional;
  *
  * @author Created by: Pplociennik at 10.03.2024 14:27
  */
-@Component( "auditAwareImpl" )
 public class AuditAwareImpl implements AuditorAware< String > {
 
     private static final String DEFAULT_OBJECT_CREATOR_NAME = "SYSTEM";
