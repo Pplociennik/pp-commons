@@ -28,6 +28,7 @@ package com.github.pplociennik.commons.audit;
 
 import org.springframework.data.domain.AuditorAware;
 
+import java.time.Instant;
 import java.util.Optional;
 
 /**
@@ -35,12 +36,10 @@ import java.util.Optional;
  *
  * @author Created by: Pplociennik at 10.03.2024 14:27
  */
-public class AuditAwareImpl implements AuditorAware< String > {
-
-    private static final String DEFAULT_OBJECT_CREATOR_NAME = "SYSTEM";
+public class AuditAwareImpl implements AuditorAware< Instant > {
 
     @Override
-    public Optional< String > getCurrentAuditor() {
-        return Optional.of( DEFAULT_OBJECT_CREATOR_NAME );
+    public Optional< Instant > getCurrentAuditor() {
+        return Optional.of( Instant.now() );
     }
 }
