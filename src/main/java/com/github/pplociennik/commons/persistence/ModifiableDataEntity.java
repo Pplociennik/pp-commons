@@ -38,7 +38,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 /**
  * A base data entity for identifiable object modification time storing.
@@ -57,26 +57,26 @@ public abstract class ModifiableDataEntity extends BaseIdentifiableDataEntity {
      */
     @Column( name = "CREATED_AT", nullable = false, updatable = false )
     @CreatedDate
-    private ZonedDateTime createdAt;
+    private Instant createdAt;
 
     /**
      * A name of user being the creator.
      */
     @Column( name = "CREATED_BY", nullable = false, updatable = false )
     @CreatedBy
-    private String createdBy;
+    private Instant createdBy;
 
     /**
      * A date and time of the object's last modification.
      */
     @Column( name = "LAST_MODIFIED_AT" )
     @LastModifiedDate
-    private ZonedDateTime lastModifiedAt;
+    private Instant lastModifiedAt;
 
     /**
      * A name of user being the last modifier.
      */
     @Column( name = "LAST_MODIFIED_BY" )
     @LastModifiedBy
-    private String lastModifiedBy;
+    private Instant lastModifiedBy;
 }
