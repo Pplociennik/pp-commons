@@ -64,7 +64,7 @@ public abstract class ModifiableDataEntity extends BaseIdentifiableDataEntity {
      */
     @Column( name = "CREATED_BY", nullable = false, updatable = false )
     @CreatedBy
-    private Instant createdBy;
+    private String createdBy;
 
     /**
      * A date and time of the object's last modification.
@@ -78,5 +78,5 @@ public abstract class ModifiableDataEntity extends BaseIdentifiableDataEntity {
      */
     @Column( name = "LAST_MODIFIED_BY" )
     @LastModifiedBy
-    private Instant lastModifiedBy;
+    private String lastModifiedBy;
 }
