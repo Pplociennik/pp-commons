@@ -28,18 +28,17 @@ package com.github.pplociennik.commons.audit;
 
 import org.springframework.data.domain.AuditorAware;
 
-import java.time.Instant;
 import java.util.Optional;
 
 /**
- * A default {@link Instant} auditor. Needs to be configured in the spring application starter using the @EnableJpaAuditing annotation.
+ * A default auditor. Needs to be configured in the spring application starter using the @EnableJpaAuditing annotation.
  *
  * @author Created by: Pplociennik at 10.03.2024 14:27
  */
-public class DefaultInstantAuditor implements AuditorAware< Instant > {
+public class DefaultAuditor implements AuditorAware< String > {
 
     @Override
-    public Optional< Instant > getCurrentAuditor() {
-        return Optional.of( Instant.now() );
+    public Optional< String > getCurrentAuditor() {
+        return Optional.of( "SYSTEM" );
     }
 }
