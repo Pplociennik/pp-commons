@@ -27,6 +27,7 @@
 package com.github.pplociennik.commons.exc;
 
 import com.github.pplociennik.commons.dto.ErrorResponseDto;
+import com.github.pplociennik.commons.exc.resources.ResourceNotFoundException;
 import com.github.pplociennik.commons.utility.LanguageUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

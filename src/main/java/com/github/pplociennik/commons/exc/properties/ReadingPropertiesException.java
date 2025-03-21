@@ -22,33 +22,33 @@
  * SOFTWARE.
  */
 
-package com.github.pplociennik.commons.exc;
+package com.github.pplociennik.commons.exc.properties;
 
+import com.github.pplociennik.commons.exc.BaseRuntimeException;
 import com.github.pplociennik.commons.lang.TranslationKey;
 
 import java.io.Serializable;
 
 /**
- * An exception being thrown when the validation process fails.
+ * An exception being thrown when the properties cannot be read.
  *
- * @author Created by: Pplociennik at 22.12.2021 19:48
+ * @author Created by: Pplociennik at 29.01.2022 20:19
  */
-public class ValidationException extends BaseRuntimeException {
+public class ReadingPropertiesException extends BaseRuntimeException {
 
-    public ValidationException( final TranslationKey aKey, final Serializable... aArgs ) {
-        super( aKey, aArgs );
-    }
-
-    public ValidationException() {
-        super( "Validation failed!" );
-    }
-
-    public ValidationException( String aMessage ) {
+    public ReadingPropertiesException( String aMessage ) {
         super( aMessage );
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
+    public ReadingPropertiesException( String aMessage, Throwable aCause ) {
+        super( aMessage, aCause );
+    }
+
+    public ReadingPropertiesException( Throwable aCause ) {
+        super( aCause );
+    }
+
+    public ReadingPropertiesException( TranslationKey aKey, Serializable... aArgs ) {
+        super( aKey, aArgs );
     }
 }

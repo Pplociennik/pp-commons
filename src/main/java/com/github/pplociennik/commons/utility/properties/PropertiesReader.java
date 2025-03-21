@@ -24,7 +24,7 @@
 
 package com.github.pplociennik.commons.utility.properties;
 
-import com.github.pplociennik.commons.exc.ReadingPropertiesException;
+import com.github.pplociennik.commons.exc.properties.ReadingPropertiesException;
 
 import java.io.InputStream;
 import java.util.Properties;

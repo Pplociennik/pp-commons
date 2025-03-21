@@ -24,7 +24,7 @@
 
 package com.github.pplociennik.commons.validation;
 
-import com.github.pplociennik.commons.exc.ValidationException;
+import com.github.pplociennik.commons.exc.validation.ValidationException;
 import com.github.pplociennik.commons.lang.TranslationKey;
 import org.springframework.lang.NonNull;
 

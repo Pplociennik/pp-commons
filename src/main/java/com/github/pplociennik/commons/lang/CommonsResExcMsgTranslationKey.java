@@ -44,7 +44,17 @@ public enum CommonsResExcMsgTranslationKey implements TranslationKey {
     /**
      * Unexpected exception! Reason: {0}
      */
-    UNEXPECTED_EXCEPTION;
+    UNEXPECTED_EXCEPTION,
+
+    /**
+     * System property '{0}' not found!
+     */
+    NO_SUCH_SYSTEM_PROPERTY,
+
+    /**
+     * Property '{0}' has an invalid value: '{1}'! Correct values are: {2}.
+     */
+    INVALID_PROPERTY_VALUE;
 
     private static final String EXCEPTIONS_TRANSLATIONS_BASENAME_PROPERTY = "lang/CommonsResExcMsg";
 

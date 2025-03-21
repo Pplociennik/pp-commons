@@ -24,8 +24,9 @@
  *   -->
  */
 
-package com.github.pplociennik.commons.exc;
+package com.github.pplociennik.commons.exc.resources;
 
+import com.github.pplociennik.commons.exc.BaseRuntimeException;
 import com.github.pplociennik.commons.utility.LanguageUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
