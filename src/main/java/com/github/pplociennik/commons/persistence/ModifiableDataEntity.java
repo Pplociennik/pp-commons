@@ -50,7 +50,7 @@ import java.time.Instant;
 @Setter
 @ToString
 @EntityListeners( AuditingEntityListener.class )
-public abstract class ModifiableDataEntity extends BaseIdentifiableDataEntity {
+public abstract class ModifiableDataEntity extends BaseDataEntity {
 
     /**
      * A date and time of the object's creation.

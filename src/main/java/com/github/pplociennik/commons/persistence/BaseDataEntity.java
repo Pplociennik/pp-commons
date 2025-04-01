@@ -31,10 +31,11 @@ import jakarta.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**
- * A base entity for unique objects identification.
+ * A base entity.
+ * <b>ATTENTION!</b> It does not contain the id field! This must be added to each new entity separately!
  *
  * @author Created by: Pplociennik at 21.12.2022 21:27
  */
 @MappedSuperclass
-public abstract class BaseIdentifiableDataEntity implements Serializable {
+public abstract class BaseDataEntity implements Serializable {
 }
