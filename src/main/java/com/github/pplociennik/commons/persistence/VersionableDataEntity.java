@@ -31,6 +31,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 
 /**
@@ -39,6 +40,7 @@ import lombok.Setter;
  * @author Created by: Pplociennik at 21.12.2022 21:48
  */
 @MappedSuperclass
+@SuperBuilder
 public abstract class VersionableDataEntity extends ModifiableDataEntity {
 
     /**
