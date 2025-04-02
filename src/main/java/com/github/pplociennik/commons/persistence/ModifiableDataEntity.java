@@ -51,7 +51,6 @@ import java.time.Instant;
 @Setter
 @ToString
 @EntityListeners( AuditingEntityListener.class )
-@SuperBuilder
 public abstract class ModifiableDataEntity extends BaseDataEntity {
 
     /**

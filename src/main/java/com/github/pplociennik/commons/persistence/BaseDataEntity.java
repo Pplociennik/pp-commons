@@ -38,6 +38,5 @@ import java.io.Serializable;
  * @author Created by: Pplociennik at 21.12.2022 21:27
  */
 @MappedSuperclass
-@SuperBuilder
 public abstract class BaseDataEntity implements Serializable {
 }
