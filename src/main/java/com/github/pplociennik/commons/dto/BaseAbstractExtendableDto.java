@@ -27,6 +27,7 @@
 package com.github.pplociennik.commons.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
@@ -39,5 +40,6 @@ import java.io.Serializable;
         name = "Base abstract schema to be extended.",
         description = "Base schema being the base for the other ones' creation."
 )
+@SuperBuilder
 public class BaseAbstractExtendableDto implements Serializable {
 }

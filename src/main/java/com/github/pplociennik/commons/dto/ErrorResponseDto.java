@@ -27,9 +27,9 @@
 package com.github.pplociennik.commons.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 import org.springframework.http.HttpStatus;
 
 import java.time.ZonedDateTime;
@@ -45,7 +45,7 @@ import java.time.ZonedDateTime;
 )
 @EqualsAndHashCode( callSuper = true )
 @Data
-@AllArgsConstructor
+@SuperBuilder
 public class ErrorResponseDto extends BaseAbstractExtendableDto {
 
     @Schema(
