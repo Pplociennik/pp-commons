@@ -30,7 +30,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.SuperBuilder;
 
 /**
  * A data transfer object holding the data describing the response of the request.
@@ -55,6 +54,8 @@ public class ResponseDto extends BaseAbstractExtendableDto {
             description = "A status message of the response.",
             example = "Resource created successfully." )
     private String statusMsg;
+
+    private AccessTokenInfoDto tokenInfo;
 }
 
 
