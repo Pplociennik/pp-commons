@@ -111,6 +111,32 @@ public class ResponseDto extends BaseAbstractExtendableDto {
 
         return new ResponseDto( aStatusCode, aStatusMsg, AccessTokenInfoDto.notRefreshed() );
     }
+
+    /**
+     * Creates a {@link ResponseDto} instance based on the provided parameters. The creation can include
+     * refreshed access token information or current token information, depending on the value of
+     * {@code aTokenRefreshed}.
+     *
+     * @param aStatusCode
+     *         the status code representing the outcome of the response
+     * @param aStatusMsg
+     *         the status message providing details about the response
+     * @param aTokenRefreshed
+     *         a flag indicating whether the access token has been refreshed
+     * @param aUserAccessToken
+     *         the new user access token to be included in the response if the token is refreshed
+     * @return a {@link ResponseDto} containing the response data, including either refreshed token
+     * information if {@code aTokenRefreshed} is {@code true}, or current token information otherwise
+     */
+    public static ResponseDto with( @NonNull String aStatusCode, @NonNull String aStatusMsg, boolean aTokenRefreshed, @NonNull String aUserAccessToken ) {
+        requireNonNull( aStatusCode );
+        requireNonNull( aStatusMsg );
+        requireNonNull( aUserAccessToken );
+
+        return aTokenRefreshed
+                ? withTokenRefreshed( aStatusCode, aStatusMsg, aUserAccessToken )
+                : withCurrentTokenValid( aStatusCode, aStatusMsg );
+    }
 }
 
 
