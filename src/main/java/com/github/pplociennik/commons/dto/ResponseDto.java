@@ -86,7 +86,7 @@ public class ResponseDto extends BaseAbstractExtendableDto {
      *         the new access token that has been refreshed
      * @return a {@link ResponseDto} containing the response data along with the refreshed token information
      */
-    private static ResponseDto withTokenRefreshed( @NonNull String aStatusCode, @NonNull String aStatusMsg, @NonNull String aNewUserAccessToken ) {
+    public static ResponseDto withTokenRefreshed( @NonNull String aStatusCode, @NonNull String aStatusMsg, @NonNull String aNewUserAccessToken ) {
         requireNonNull( aStatusCode );
         requireNonNull( aStatusMsg );
         requireNonNull( aNewUserAccessToken );
