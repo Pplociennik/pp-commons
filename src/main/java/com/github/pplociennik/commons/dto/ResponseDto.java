@@ -27,9 +27,11 @@
 package com.github.pplociennik.commons.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.lang.NonNull;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * A data transfer object holding the data describing the response of the request.
@@ -42,7 +44,6 @@ import lombok.EqualsAndHashCode;
 )
 @EqualsAndHashCode( callSuper = true )
 @Data
-@AllArgsConstructor
 public class ResponseDto extends BaseAbstractExtendableDto {
 
     @Schema(
@@ -56,6 +57,60 @@ public class ResponseDto extends BaseAbstractExtendableDto {
     private String statusMsg;
 
     private AccessTokenInfoDto tokenInfo;
+
+    /**
+     * Private constructor for creating an instance of {@code ResponseDto}.
+     *
+     * @param statusCode
+     *         the status code of the response
+     * @param statusMsg
+     *         the status message of the response
+     * @param tokenInfo
+     *         the access token information associated with the response
+     */
+    private ResponseDto( String statusCode, String statusMsg, AccessTokenInfoDto tokenInfo ) {
+        this.statusCode = statusCode;
+        this.statusMsg = statusMsg;
+        this.tokenInfo = tokenInfo;
+    }
+
+    /**
+     * Creates a {@link ResponseDto} instance containing the provided status code, status message,
+     * and refreshed access token information.
+     *
+     * @param aStatusCode
+     *         the status code representing the outcome of the response
+     * @param aStatusMsg
+     *         the status message providing details about the response
+     * @param aNewUserAccessToken
+     *         the new access token that has been refreshed
+     * @return a {@link ResponseDto} containing the response data along with the refreshed token information
+     */
+    private static ResponseDto withTokenRefreshed( @NonNull String aStatusCode, @NonNull String aStatusMsg, @NonNull String aNewUserAccessToken ) {
+        requireNonNull( aStatusCode );
+        requireNonNull( aStatusMsg );
+        requireNonNull( aNewUserAccessToken );
+
+        AccessTokenInfoDto refreshedTokenInfo = AccessTokenInfoDto.refreshed( aNewUserAccessToken );
+        return new ResponseDto( aStatusCode, aStatusMsg, refreshedTokenInfo );
+    }
+
+    /**
+     * Creates a {@link ResponseDto} instance containing the provided status code, status message,
+     * and information indicating that the current access token is valid and has not been refreshed.
+     *
+     * @param aStatusCode
+     *         the status code representing the outcome of the response
+     * @param aStatusMsg
+     *         the status message providing details about the response
+     * @return a {@link ResponseDto} containing the response data with the current (unrefreshed) access token information
+     */
+    public static ResponseDto withCurrentTokenValid( @NonNull String aStatusCode, @NonNull String aStatusMsg ) {
+        requireNonNull( aStatusCode );
+        requireNonNull( aStatusMsg );
+
+        return new ResponseDto( aStatusCode, aStatusMsg, AccessTokenInfoDto.notRefreshed() );
+    }
 }
 
 
