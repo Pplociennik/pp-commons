@@ -17,7 +17,7 @@ import static com.github.pplociennik.commons.utility.CustomObjects.requireNonEmp
  * @author Created by: Pplociennik at 16.04.2025 19:00
  */
 @Getter
-public class AccessTokenInfoDto extends BaseAbstractExtendableDto {
+public class ResponseAccessTokenInfoDto extends BaseAbstractExtendableDto {
 
     @Schema(
             description = "Indicates whether the access token was refreshed or not.",
@@ -38,7 +38,7 @@ public class AccessTokenInfoDto extends BaseAbstractExtendableDto {
      * @param accessToken
      *         a new access token (if it was refreshed)
      */
-    private AccessTokenInfoDto( boolean refreshed, String accessToken ) {
+    private ResponseAccessTokenInfoDto( boolean refreshed, String accessToken ) {
         this.refreshed = refreshed;
         this.accessToken = accessToken;
     }
@@ -49,15 +49,15 @@ public class AccessTokenInfoDto extends BaseAbstractExtendableDto {
      * @param aNewAccessToken
      *         a new access token
      */
-    public static AccessTokenInfoDto refreshed( @NonNull String aNewAccessToken ) {
+    public static ResponseAccessTokenInfoDto refreshed( @NonNull String aNewAccessToken ) {
         requireNonEmpty( aNewAccessToken );
-        return new AccessTokenInfoDto( true, aNewAccessToken );
+        return new ResponseAccessTokenInfoDto( true, aNewAccessToken );
     }
 
     /**
      * Creates and returns new instance marking the token was not refreshed.
      */
-    public static AccessTokenInfoDto notRefreshed() {
-        return new AccessTokenInfoDto( false, null );
+    public static ResponseAccessTokenInfoDto notRefreshed() {
+        return new ResponseAccessTokenInfoDto( false, null );
     }
 }

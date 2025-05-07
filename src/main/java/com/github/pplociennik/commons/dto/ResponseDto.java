@@ -27,9 +27,11 @@
 package com.github.pplociennik.commons.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.springframework.lang.NonNull;
+
+import java.util.List;
 
 import static java.util.Objects.requireNonNull;
 
@@ -43,99 +45,141 @@ import static java.util.Objects.requireNonNull;
         description = "Schema for holding the response information data."
 )
 @EqualsAndHashCode( callSuper = true )
-@Data
-public class ResponseDto extends BaseAbstractExtendableDto {
-
-    @Schema(
-            description = "A status code of the response.",
-            example = "200" )
-    private String statusCode;
-
-    @Schema(
-            description = "A status message of the response.",
-            example = "Resource created successfully." )
-    private String statusMsg;
-
-    private AccessTokenInfoDto tokenInfo;
+@Getter
+public class ResponseDto< T > extends BaseAbstractExtendableDto {
 
     /**
-     * Private constructor for creating an instance of {@code ResponseDto}.
-     *
-     * @param statusCode
-     *         the status code of the response
-     * @param statusMsg
-     *         the status message of the response
-     * @param tokenInfo
-     *         the access token information associated with the response
+     * Contains the status information regarding the processing of a request.
+     * It encapsulates details such as a status code and a corresponding status message,
+     * which provide information about the outcome or state of the request processing.
      */
-    private ResponseDto( String statusCode, String statusMsg, AccessTokenInfoDto tokenInfo ) {
-        this.statusCode = statusCode;
-        this.statusMsg = statusMsg;
-        this.tokenInfo = tokenInfo;
+    private ResponseStatusInfoDto statusInfo;
+
+    /**
+     * Encapsulates information about the access token associated with the response.
+     * This includes details on whether the token has been refreshed and the new token value, if applicable.
+     * Useful for handling token management in API responses.
+     */
+    private ResponseAccessTokenInfoDto tokenInfo;
+
+    /**
+     * Represents a collection of response data items associated with the processed request.
+     * This list contains the specific data objects of type {@code T} that are returned as part of the response.
+     * It serves as the main content section of the response, holding potentially multiple elements.
+     *
+     * @param <T> the type of the response data items
+     */
+    private List< T > responseData;
+
+    /**
+     * Constructs a new instance of {@code ResponseDto}.
+     *
+     * @param aStatusInfo
+     *         the status information of the response
+     * @param aTokenInfo
+     *         the access token information of the response
+     * @param aResponseData
+     *         the response data
+     */
+    private ResponseDto( ResponseStatusInfoDto aStatusInfo, ResponseAccessTokenInfoDto aTokenInfo, List< T > aResponseData ) {
+        this.statusInfo = aStatusInfo;
+        this.tokenInfo = aTokenInfo;
+        this.responseData = aResponseData;
     }
 
     /**
-     * Creates a {@link ResponseDto} instance containing the provided status code, status message,
-     * and refreshed access token information.
+     * Creates a new instance of the {@code Builder}, allowing to configure and build a {@code ResponseDto} object.
      *
-     * @param aStatusCode
-     *         the status code representing the outcome of the response
-     * @param aStatusMsg
-     *         the status message providing details about the response
-     * @param aNewUserAccessToken
-     *         the new access token that has been refreshed
-     * @return a {@link ResponseDto} containing the response data along with the refreshed token information
+     * @return a new {@code Builder} instance for constructing {@code ResponseDto} objects
      */
-    public static ResponseDto withTokenRefreshed( @NonNull String aStatusCode, @NonNull String aStatusMsg, @NonNull String aNewUserAccessToken ) {
-        requireNonNull( aStatusCode );
-        requireNonNull( aStatusMsg );
-        requireNonNull( aNewUserAccessToken );
-
-        AccessTokenInfoDto refreshedTokenInfo = AccessTokenInfoDto.refreshed( aNewUserAccessToken );
-        return new ResponseDto( aStatusCode, aStatusMsg, refreshedTokenInfo );
+    public static Builder builder() {
+        return new Builder<>();
     }
 
     /**
-     * Creates a {@link ResponseDto} instance containing the provided status code, status message,
-     * and information indicating that the current access token is valid and has not been refreshed.
+     * A builder class for constructing {@code ResponseDto} instances. It provides methods
+     * for setting the status information, accessing token details, and response data.
+     * This class simplifies the creation of {@code ResponseDto} objects
+     * with clearly defined configurations and parameters.
      *
-     * @param aStatusCode
-     *         the status code representing the outcome of the response
-     * @param aStatusMsg
-     *         the status message providing details about the response
-     * @return a {@link ResponseDto} containing the response data with the current (unrefreshed) access token information
+     * @param <T>
+     *         the type of the response data element
      */
-    public static ResponseDto withCurrentTokenValid( @NonNull String aStatusCode, @NonNull String aStatusMsg ) {
-        requireNonNull( aStatusCode );
-        requireNonNull( aStatusMsg );
+    public static class Builder< T > {
+        private ResponseStatusInfoDto statusInfo;
+        private ResponseAccessTokenInfoDto tokenInfo;
+        private List< T > responseData;
 
-        return new ResponseDto( aStatusCode, aStatusMsg, AccessTokenInfoDto.notRefreshed() );
-    }
+        /**
+         * Constructs a new {@code Builder} instance with default initial values.
+         * By default, the {@code tokenInfo} field is initialized using the
+         * {@code ResponseAccessTokenInfoDto.notRefreshed()} method, indicating
+         * that the access token has not been refreshed.
+         */
+        Builder() {
+            this.tokenInfo = ResponseAccessTokenInfoDto.notRefreshed();
+        }
 
-    /**
-     * Creates a {@link ResponseDto} instance based on the provided parameters. The creation can include
-     * refreshed access token information or current token information, depending on the value of
-     * {@code aTokenRefreshed}.
-     *
-     * @param aStatusCode
-     *         the status code representing the outcome of the response
-     * @param aStatusMsg
-     *         the status message providing details about the response
-     * @param aTokenRefreshed
-     *         a flag indicating whether the access token has been refreshed
-     * @param aUserAccessToken
-     *         the new user access token to be included in the response if the token is refreshed
-     * @return a {@link ResponseDto} containing the response data, including either refreshed token
-     * information if {@code aTokenRefreshed} is {@code true}, or current token information otherwise
-     */
-    public static ResponseDto with( @NonNull String aStatusCode, @NonNull String aStatusMsg, boolean aTokenRefreshed, @NonNull String aUserAccessToken ) {
-        requireNonNull( aStatusCode );
-        requireNonNull( aStatusMsg );
-        requireNonNull( aUserAccessToken );
+        /**
+         * Adds status information to the {@code Builder} instance by setting the status code
+         * and status message. This information will be encapsulated as a {@code ResponseStatusInfoDto}.
+         *
+         * @param aStatusCode
+         *         the status code representing the processing result must not be null
+         * @param aStatusMsg
+         *         the status message describing the processing result must not be null
+         * @return the current {@code Builder} instance with updated status information
+         */
+        public Builder< T > withStatusInfo( @NonNull String aStatusCode, @NonNull String aStatusMsg ) {
+            requireNonNull( aStatusCode );
+            requireNonNull( aStatusMsg );
+            this.statusInfo = ResponseStatusInfoDto.of( aStatusCode, aStatusMsg );
+            return this;
+        }
 
-        return aTokenRefreshed
-                ? withTokenRefreshed( aStatusCode, aStatusMsg, aUserAccessToken )
-                : withCurrentTokenValid( aStatusCode, aStatusMsg );
+        /**
+         * Configures the {@code Builder} instance with user access token details. When the access token
+         * is refreshed, updates the token information with the new access token.
+         *
+         * @param aTokenRefreshed
+         *         a boolean value indicating whether the access token has been refreshed
+         * @param aNewUserAccessToken
+         *         the new access token value must not be null
+         * @return the current {@code Builder} instance with updated access token information
+         */
+        public Builder< T > withUserAccessToken( boolean aTokenRefreshed, @NonNull String aNewUserAccessToken ) {
+            requireNonNull( aNewUserAccessToken );
+            if ( aTokenRefreshed ) {
+                this.tokenInfo = ResponseAccessTokenInfoDto.refreshed( aNewUserAccessToken );
+            }
+            return this;
+        }
+
+        /**
+         * Configures the {@code Builder} instance with a list of response data objects.
+         *
+         * @param aResponseData
+         *         a {@code List} containing response data objects, must not be null
+         * @return the current {@code Builder} instance with the response data set
+         */
+        public Builder< T > withResponseData( @NonNull List< T > aResponseData ) {
+            requireNonNull( aResponseData );
+            this.responseData = aResponseData;
+            return this;
+        }
+
+        /**
+         * Builds a new {@code ResponseDto} instance using the configured properties of the {@code Builder}.
+         * The returned {@code ResponseDto} encapsulates the status information, access token details,
+         * and response data that have been set in the {@code Builder}.
+         *
+         * @return a fully constructed {@code ResponseDto} object containing the status information,
+         * access token information, and response data configured in the {@code Builder}
+         */
+        public < T > ResponseDto< T > build() {
+            return new ResponseDto( statusInfo, tokenInfo, responseData );
+        }
+
     }
 }
 
