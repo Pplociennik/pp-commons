@@ -29,9 +29,12 @@ package com.github.pplociennik.commons.exc;
 import com.github.pplociennik.commons.dto.ErrorResponseDto;
 import com.github.pplociennik.commons.exc.resources.ResourceNotFoundException;
 import com.github.pplociennik.commons.utility.LanguageUtil;
+import jakarta.ws.rs.Produces;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -56,6 +59,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return {@link ErrorResponseDto}.
      */
     @ExceptionHandler( ResourceNotFoundException.class )
+    @ResponseBody
+    @Produces( MediaType.APPLICATION_JSON_VALUE )
     public ResponseEntity< ErrorResponseDto > handleResourceNotFoundException( ResourceNotFoundException aException,
                                                                                WebRequest aWebRequest ) {
         ErrorResponseDto errorResponseDTO = new ErrorResponseDto(
@@ -78,6 +83,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return a response with INTERNAL_SERVER_ERROR status
      */
     @ExceptionHandler( Exception.class )
+    @ResponseBody
+    @Produces( MediaType.APPLICATION_JSON_VALUE )
     ResponseEntity< ErrorResponseDto > handleUnexpectedException( Exception aException, WebRequest aWebRequest ) {
         var message = LanguageUtil.getLocalizedMessage( UNEXPECTED_EXCEPTION, aException.getMessage() );
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(
