@@ -5,7 +5,6 @@ import com.github.pplociennik.commons.system.registry.SystemRegistry;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -29,7 +28,6 @@ import static java.util.Objects.requireNonNull;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Component
 public final class SynchronizedHashSetBasedSystemRegistry< T > implements CollectingSystemRegistry< T > {
 
     /**
