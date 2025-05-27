@@ -6,6 +6,7 @@ import com.github.pplociennik.commons.system.registry.SystemRegistry;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -28,6 +29,7 @@ import static java.util.Objects.requireNonNull;
  */
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
 public final class HashSetBasedSystemRegistry< T > implements CollectingSystemRegistry< T > {
 
     /**
