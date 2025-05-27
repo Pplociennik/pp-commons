@@ -48,35 +48,99 @@ public class BaseRuntimeException extends RuntimeException {
      */
     private Serializable[] params;
 
-    public BaseRuntimeException() {
-    }
-
-    public BaseRuntimeException( String aMessage ) {
-        super( aMessage );
-    }
-
-    public BaseRuntimeException( String aMessage, Throwable aCause ) {
-        super( aMessage, aCause );
-    }
-
-    public BaseRuntimeException( Throwable aCause ) {
-        super( aCause );
-    }
-
-    public BaseRuntimeException(
-            String aMessage, Throwable aCause, boolean aEnableSuppression, boolean aWritableStackTrace ) {
-        super( aMessage, aCause, aEnableSuppression, aWritableStackTrace );
-    }
-
+    /**
+     * Constructs a new {@code BaseRuntimeException} with a specified translation key and parameters.
+     * The localized message is generated using the provided translation key and parameters.
+     *
+     * @param aTranslationKey
+     *         the translation key used to retrieve the localized message
+     * @param aParams
+     *         optional parameters for constructing the localized message
+     */
     public BaseRuntimeException( TranslationKey aTranslationKey, Serializable... aParams ) {
         super( LanguageUtil.getLocalizedMessage( aTranslationKey, aParams ) );
         messageKey = aTranslationKey;
         params = aParams;
     }
 
+    /**
+     * Constructs a new {@code BaseRuntimeException} with a specified translation key.
+     * The localized message is generated using the provided translation key.
+     *
+     * @param aTranslationKey
+     *         the translation key used to retrieve the localized message
+     */
     public BaseRuntimeException( TranslationKey aTranslationKey ) {
         super( LanguageUtil.getLocalizedMessage( aTranslationKey ) );
         messageKey = aTranslationKey;
+    }
+
+    /**
+     * Constructs a new {@code BaseRuntimeException} with the specified cause, translation key, and parameters.
+     * This constructor allows specifying a throwable cause, a translation key for the localized message,
+     * and optional parameters for constructing the localized message.
+     *
+     * @param aCause
+     *         the cause of the exception, which may be retrieved later by the {@link #getCause()} method.
+     *         A {@code null} value is permitted and indicates that the cause is nonexistent or unknown.
+     * @param aMessageKey
+     *         the translation key used to retrieve the localized message.
+     * @param aParams
+     *         optional parameters for constructing the localized message.
+     */
+    public BaseRuntimeException( Throwable aCause, TranslationKey aMessageKey, Serializable... aParams ) {
+        super( aCause );
+        this.messageKey = aMessageKey;
+        this.params = aParams;
+    }
+
+    /**
+     * Constructs a new runtime exception with the specified detail message.
+     * The cause is not initialized, and may subsequently be initialized by a
+     * call to {@link #initCause}.
+     *
+     * @param message
+     *         the detail message. The detail message is saved for
+     *         later retrieval by the {@link #getMessage()} method.
+     */
+    public BaseRuntimeException( String message ) {
+        super( message );
+    }
+
+    /**
+     * Constructs a new runtime exception with the specified detail message and
+     * cause.  <p>Note that the detail message associated with
+     * {@code cause} is <i>not</i> automatically incorporated in
+     * this runtime exception's detail message.
+     *
+     * @param message
+     *         the detail message (which is saved for later retrieval
+     *         by the {@link #getMessage()} method).
+     * @param cause
+     *         the cause (which is saved for later retrieval by the
+     *         {@link #getCause()} method).  (A {@code null} value is
+     *         permitted, and indicates that the cause is nonexistent or
+     *         unknown.)
+     * @since 1.4
+     */
+    public BaseRuntimeException( String message, Throwable cause ) {
+        super( message, cause );
+    }
+
+    /**
+     * Creates a localized description of this throwable.
+     * Subclasses may override this method in order to produce a
+     * locale-specific message.  For subclasses that do not override this
+     * method, the default implementation returns the same result as
+     * {@code getMessage()}.
+     *
+     * @return The localized description of this throwable.
+     *
+     * @since 1.1
+     */
+    @Override
+    public String getLocalizedMessage() {
+        return LanguageUtil.getLocalizedMessage( messageKey, ( Object[] ) params );
     }
 
     /**
