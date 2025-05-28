@@ -27,6 +27,13 @@ public interface SystemRegistry< T > {
     void clear();
 
     /**
+     * Checks if the registry is empty.
+     *
+     * @return {@code true} if the registry contains no elements, {@code false} otherwise
+     */
+    boolean isEmpty();
+
+    /**
      * Creates and returns a copy of this {@code SystemRegistry} instance.
      * The exact meaning of "copy" may depend on the implementation, but it typically involves duplicating
      * the current state of the registry, including its stored elements, if any.

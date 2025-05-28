@@ -41,6 +41,22 @@ public interface CollectingSystemRegistry< T > extends SystemRegistry< T > {
     void remove( @NonNull Collection< T > aObjects );
 
     /**
+     * Checks if the specified object is present in the collecting system registry.
+     *
+     * @param aObject
+     *         the object to be checked
+     * @return {@code true} if the object is present in the registry, {@code false} otherwise
+     */
+    boolean contains( @NonNull T aObject );
+
+    /**
+     * Returns the number of elements currently stored in the registry.
+     *
+     * @return the total number of elements in the registry
+     */
+    int size();
+
+    /**
      * Returns an iterable collection of all elements currently stored in the registry.
      *
      * @return an {@code Iterable} containing all elements in the registry

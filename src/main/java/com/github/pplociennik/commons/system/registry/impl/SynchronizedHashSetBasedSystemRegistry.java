@@ -76,6 +76,29 @@ public final class SynchronizedHashSetBasedSystemRegistry< T > implements Collec
     }
 
     /**
+     * Checks if the specified object is present in the collecting system registry.
+     *
+     * @param aObject
+     *         the object to be checked
+     * @return {@code true} if the object is present in the registry, {@code false} otherwise
+     */
+    @Override
+    public boolean contains( @NonNull T aObject ) {
+        requireNonNull( aObject );
+        return values.contains( aObject );
+    }
+
+    /**
+     * Returns the number of elements currently stored in the registry.
+     *
+     * @return the total number of elements in the registry
+     */
+    @Override
+    public int size() {
+        return values.size();
+    }
+
+    /**
      * Returns an iterable collection of all elements currently stored in the registry.
      *
      * @return an {@code Iterable} containing all elements in the registry
@@ -116,6 +139,16 @@ public final class SynchronizedHashSetBasedSystemRegistry< T > implements Collec
     @Override
     public synchronized void clear() {
         values.clear();
+    }
+
+    /**
+     * Checks if the registry is empty.
+     *
+     * @return {@code true} if the registry contains no elements, {@code false} otherwise
+     */
+    @Override
+    public boolean isEmpty() {
+        return values.isEmpty();
     }
 
     /**
