@@ -1,5 +1,7 @@
 package com.github.pplociennik.commons.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,7 +44,8 @@ public class ResponseStatusInfoDto extends BaseAbstractExtendableDto {
      * @param aStatusMsg
      *         the status message of the response
      */
-    private ResponseStatusInfoDto( @NonNull String aStatusCode, @NonNull String aStatusMsg ) {
+    @JsonCreator
+    private ResponseStatusInfoDto( @NonNull @JsonProperty( value = "statusCode" ) String aStatusCode, @NonNull @JsonProperty( value = "statusMsg" ) String aStatusMsg ) {
         requireNonNull( aStatusCode );
         requireNonNull( aStatusMsg );
 
