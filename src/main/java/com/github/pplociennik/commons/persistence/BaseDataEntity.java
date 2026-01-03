@@ -31,7 +31,6 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -48,7 +47,6 @@ import java.time.Instant;
 @Getter
 @Setter
 @ToString
-@SuperBuilder
 public abstract class BaseDataEntity implements Serializable {
 
     /**
