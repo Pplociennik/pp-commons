@@ -26,10 +26,16 @@
 
 package com.github.pplociennik.commons.persistence;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
-import lombok.experimental.SuperBuilder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 /**
  * A base entity.
@@ -38,5 +44,22 @@ import java.io.Serializable;
  * @author Created by: Pplociennik at 21.12.2022 21:27
  */
 @MappedSuperclass
+@Getter
+@Setter
+@ToString
 public abstract class BaseDataEntity implements Serializable {
+
+    /**
+     * A date and time of the object's creation.
+     */
+    @Column( name = "CREATED_AT", nullable = false, updatable = false )
+    @CreatedDate
+    private Instant createdAt;
+
+    /**
+     * A name of user being the creator.
+     */
+    @Column( name = "CREATED_BY", nullable = false, updatable = false )
+    @CreatedBy
+    private String createdBy;
 }
