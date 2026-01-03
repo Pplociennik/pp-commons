@@ -40,6 +40,7 @@ import lombok.experimental.SuperBuilder;
  * @author Created by: Pplociennik at 21.12.2022 21:48
  */
 @MappedSuperclass
+@SuperBuilder
 public abstract class VersionableDataEntity extends ModifiableDataEntity {
 
     /**
