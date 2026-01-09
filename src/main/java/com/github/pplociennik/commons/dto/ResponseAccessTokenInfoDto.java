@@ -30,6 +30,11 @@ public class ResponseAccessTokenInfoDto extends BaseAbstractExtendableDto {
     )
     private final String accessToken;
 
+    @Schema(
+            description = "Contains a number of second defining a length of the token validity."
+    )
+    private final Integer expiresIn;
+
     /**
      * Private constructor.
      *
@@ -38,26 +43,27 @@ public class ResponseAccessTokenInfoDto extends BaseAbstractExtendableDto {
      * @param accessToken
      *         a new access token (if it was refreshed)
      */
-    private ResponseAccessTokenInfoDto( boolean refreshed, String accessToken ) {
+    private ResponseAccessTokenInfoDto( boolean refreshed, String accessToken, Integer expiresIn ) {
         this.refreshed = refreshed;
         this.accessToken = accessToken;
+        this.expiresIn = expiresIn;
     }
 
     /**
-     * Creates and returns new instance marking the token refreshment and containing a new access token.
+     * Creates and returns a new instance marking the token refreshment and containing a new access token.
      *
      * @param aNewAccessToken
      *         a new access token
      */
-    public static ResponseAccessTokenInfoDto refreshed( @NonNull String aNewAccessToken ) {
+    public static ResponseAccessTokenInfoDto refreshed( @NonNull String aNewAccessToken, int aExpiresIn ) {
         requireNonEmpty( aNewAccessToken );
-        return new ResponseAccessTokenInfoDto( true, aNewAccessToken );
+        return new ResponseAccessTokenInfoDto( true, aNewAccessToken, aExpiresIn );
     }
 
     /**
-     * Creates and returns new instance marking the token was not refreshed.
+     * Creates and returns a new instance marking the token was not refreshed.
      */
     public static ResponseAccessTokenInfoDto notRefreshed() {
-        return new ResponseAccessTokenInfoDto( false, null );
+        return new ResponseAccessTokenInfoDto( false, null, null );
     }
 }

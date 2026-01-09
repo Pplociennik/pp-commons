@@ -147,10 +147,10 @@ public class ResponseDto< T > extends BaseAbstractExtendableDto {
          *         the new access token value must not be null
          * @return the current {@code Builder} instance with updated access token information
          */
-        public Builder< T > withUserAccessToken( boolean aTokenRefreshed, @NonNull String aNewUserAccessToken ) {
+        public Builder< T > withUserAccessToken( boolean aTokenRefreshed, @NonNull String aNewUserAccessToken, @NonNull Integer aExpiresIn ) {
             requireNonNull( aNewUserAccessToken );
             if ( aTokenRefreshed ) {
-                this.tokenInfo = ResponseAccessTokenInfoDto.refreshed( aNewUserAccessToken );
+                this.tokenInfo = ResponseAccessTokenInfoDto.refreshed( aNewUserAccessToken, aExpiresIn );
             }
             return this;
         }
