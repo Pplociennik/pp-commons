@@ -91,9 +91,11 @@ public class ResponseDto< T > extends BaseAbstractExtendableDto {
     /**
      * Creates a new instance of the {@code Builder}, allowing to configure and build a {@code ResponseDto} object.
      *
+     * @param <T>
+     *         the type of the response data element
      * @return a new {@code Builder} instance for constructing {@code ResponseDto} objects
      */
-    public static Builder builder() {
+    public static < T > Builder< T > builder() {
         return new Builder<>();
     }
 
@@ -178,8 +180,8 @@ public class ResponseDto< T > extends BaseAbstractExtendableDto {
          * @return a fully constructed {@code ResponseDto} object containing the status information,
          * access token information, and response data configured in the {@code Builder}
          */
-        public < T > ResponseDto< T > build() {
-            return new ResponseDto( statusInfo, tokenInfo, responseData );
+        public ResponseDto< T > build() {
+            return new ResponseDto<>( statusInfo, tokenInfo, responseData );
         }
 
     }
