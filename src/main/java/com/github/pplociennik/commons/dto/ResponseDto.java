@@ -31,6 +31,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.lang.NonNull;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
@@ -162,9 +163,10 @@ public class ResponseDto< T > extends BaseAbstractExtendableDto {
          *         a {@code List} containing response data objects, must not be null
          * @return the current {@code Builder} instance with the response data set
          */
-        public Builder< T > withResponseData( @NonNull List< T > aResponseData ) {
+        @SafeVarargs
+        public final Builder< T > withResponseData( @NonNull T... aResponseData ) {
             requireNonNull( aResponseData );
-            this.responseData = aResponseData;
+            this.responseData = Arrays.asList( aResponseData );
             return this;
         }
 
