@@ -31,6 +31,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.springframework.lang.NonNull;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,7 +48,7 @@ import static java.util.Objects.requireNonNull;
 )
 @EqualsAndHashCode( callSuper = true )
 @Getter
-public class ResponseDto< T > extends BaseAbstractExtendableDto {
+public class ResponseDto< T extends Serializable > extends BaseAbstractExtendableDto {
 
     /**
      * Contains the status information regarding the processing of a request.
@@ -95,7 +96,7 @@ public class ResponseDto< T > extends BaseAbstractExtendableDto {
      *         the type of the response data element
      * @return a new {@code Builder} instance for constructing {@code ResponseDto} objects
      */
-    public static < T > Builder< T > builder() {
+    public static < T extends Serializable > Builder< T > builder() {
         return new Builder<>();
     }
 
@@ -108,7 +109,7 @@ public class ResponseDto< T > extends BaseAbstractExtendableDto {
      * @param <T>
      *         the type of the response data element
      */
-    public static class Builder< T > {
+    public static class Builder< T extends Serializable > {
         private ResponseStatusInfoDto statusInfo;
         private ResponseAccessTokenInfoDto tokenInfo;
         private List< T > responseData;
@@ -162,13 +163,26 @@ public class ResponseDto< T > extends BaseAbstractExtendableDto {
          * Configures the {@code Builder} instance with a list of response data objects.
          *
          * @param aResponseData
-         *         a {@code List} containing response data objects, must not be null
+         *         objects containing response data objects, must not be null
          * @return the current {@code Builder} instance with the response data set
          */
         @SafeVarargs
         public final Builder< T > withResponseData( @NonNull T... aResponseData ) {
             requireNonNull( aResponseData );
             this.responseData = Arrays.asList( aResponseData );
+            return this;
+        }
+
+        /**
+         * Configures the {@code Builder} instance with a list of response data objects.
+         *
+         * @param aResponseData
+         *         a {@code List} containing response data objects, must not be null
+         * @return the current {@code Builder} instance with the response data set
+         */
+        public final Builder< T > withResponseData( @NonNull List< T > aResponseData ) {
+            requireNonNull( aResponseData );
+            this.responseData = aResponseData;
             return this;
         }
 
