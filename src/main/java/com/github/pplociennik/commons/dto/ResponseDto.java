@@ -26,6 +26,7 @@
 
 package com.github.pplociennik.commons.dto;
 
+import com.github.pplociennik.commons.system.client.ClientActionFlag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -74,6 +75,11 @@ public class ResponseDto< T extends Serializable > extends BaseAbstractExtendabl
     private List< T > responseData;
 
     /**
+     * Represents an action to be executed on the client side after receiving the response.
+     */
+    private ClientActionFlag clientActionFlag;
+
+    /**
      * Constructs a new instance of {@code ResponseDto}.
      *
      * @param aStatusInfo
@@ -113,6 +119,7 @@ public class ResponseDto< T extends Serializable > extends BaseAbstractExtendabl
         private ResponseStatusInfoDto statusInfo;
         private ResponseAccessTokenInfoDto tokenInfo;
         private List< T > responseData;
+        private ClientActionFlag clientActionFlag;
 
         /**
          * Constructs a new {@code Builder} instance with default initial values.
@@ -183,6 +190,19 @@ public class ResponseDto< T extends Serializable > extends BaseAbstractExtendabl
         public final Builder< T > withResponseData( @NonNull List< T > aResponseData ) {
             requireNonNull( aResponseData );
             this.responseData = aResponseData;
+            return this;
+        }
+
+        /**
+         * Configures the {@code Builder} instance with a client action flag.
+         *
+         * @param aClientActionFlag
+         *         the client action flag to be set, must not be null
+         * @return the current {@code Builder} instance with the specified client action flag
+         */
+        public final Builder< T > withClientActionFlag( @NonNull ClientActionFlag aClientActionFlag ) {
+            requireNonNull( aClientActionFlag );
+            this.clientActionFlag = aClientActionFlag;
             return this;
         }
 
