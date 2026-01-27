@@ -32,7 +32,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A data transfer object holding tha data about the response of the request when the error has occurred during the execution process.
@@ -45,7 +48,7 @@ import java.time.ZonedDateTime;
 )
 @EqualsAndHashCode( callSuper = true )
 @Data
-public class ErrorResponseDto extends BaseAbstractExtendableDto {
+public class ErrorResponseDto< T extends Serializable > extends BaseAbstractExtendableDto {
 
     @Schema(
             description = "API path invoked by the client.",
@@ -76,6 +79,11 @@ public class ErrorResponseDto extends BaseAbstractExtendableDto {
             example = "VERIFY_USER_EMAIL"
     )
     private ClientActionFlag clientActionFlag;
+
+    @Schema(
+            description = "A data related to the response."
+    )
+    private List< T > responseData;
 
     /**
      * Constructs a new instance of ErrorResponseDto with the specified parameters.
@@ -110,12 +118,13 @@ public class ErrorResponseDto extends BaseAbstractExtendableDto {
      * @param clientActionFlag
      *         the client action flag associated with the error
      */
-    public ErrorResponseDto( String apiPath, HttpStatus errorCode, String errorMessage, ZonedDateTime errorTime, ClientActionFlag clientActionFlag ) {
+    public ErrorResponseDto( String apiPath, HttpStatus errorCode, String errorMessage, ZonedDateTime errorTime, ClientActionFlag clientActionFlag, List< T > responseData ) {
         this.apiPath = apiPath;
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
         this.errorTime = errorTime;
         this.clientActionFlag = clientActionFlag;
+        this.responseData = responseData;
     }
 
     /**
@@ -140,12 +149,13 @@ public class ErrorResponseDto extends BaseAbstractExtendableDto {
      * This class provides a fluent API for setting specific parameters and creating
      * an instance of the ErrorResponseDto.
      */
-    public static class Builder {
+    public static class Builder< T > {
         private String apiPath;
         private HttpStatus errorCode;
         private String errorMessage;
         private ZonedDateTime errorTime;
         private ClientActionFlag clientActionFlag;
+        private List< T > responseData;
 
         /**
          * Constructs a new Builder instance with the specified parameters.
@@ -179,6 +189,18 @@ public class ErrorResponseDto extends BaseAbstractExtendableDto {
         }
 
         /**
+         * Sets the response data for the builder.
+         *
+         * @param aResponseData
+         *         the response data to associate with the error response, provided as a variable argument
+         * @return the builder instance for method chaining
+         */
+        public final Builder withResponseData( T... aResponseData ) {
+            this.responseData = Arrays.asList( aResponseData );
+            return this;
+        }
+
+        /**
          * Constructs an instance of {@link ErrorResponseDto} using the parameters
          * that have been set in the {@code Builder}.
          *
@@ -186,7 +208,7 @@ public class ErrorResponseDto extends BaseAbstractExtendableDto {
          * error code, error message, error timestamp, and client action flag.
          */
         public final ErrorResponseDto build() {
-            return new ErrorResponseDto( this.apiPath, this.errorCode, this.errorMessage, this.errorTime, this.clientActionFlag );
+            return new ErrorResponseDto( this.apiPath, this.errorCode, this.errorMessage, this.errorTime, this.clientActionFlag, this.responseData );
         }
     }
 

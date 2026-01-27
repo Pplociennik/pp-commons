@@ -28,8 +28,8 @@ package com.github.pplociennik.commons.dto;
 
 import com.github.pplociennik.commons.system.client.ClientActionFlag;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
@@ -48,7 +48,7 @@ import static java.util.Objects.requireNonNull;
         description = "Schema for holding the response information data."
 )
 @EqualsAndHashCode( callSuper = true )
-@Getter
+@Data
 public class ResponseDto< T extends Serializable > extends BaseAbstractExtendableDto {
 
     /**
@@ -89,10 +89,11 @@ public class ResponseDto< T extends Serializable > extends BaseAbstractExtendabl
      * @param aResponseData
      *         the response data
      */
-    private ResponseDto( ResponseStatusInfoDto aStatusInfo, ResponseAccessTokenInfoDto aTokenInfo, List< T > aResponseData ) {
+    private ResponseDto( ResponseStatusInfoDto aStatusInfo, ResponseAccessTokenInfoDto aTokenInfo, List< T > aResponseData, ClientActionFlag aClientActionFlag ) {
         this.statusInfo = aStatusInfo;
         this.tokenInfo = aTokenInfo;
         this.responseData = aResponseData;
+        this.clientActionFlag = aClientActionFlag;
     }
 
     /**
@@ -215,7 +216,7 @@ public class ResponseDto< T extends Serializable > extends BaseAbstractExtendabl
          * access token information, and response data configured in the {@code Builder}
          */
         public ResponseDto< T > build() {
-            return new ResponseDto<>( statusInfo, tokenInfo, responseData );
+            return new ResponseDto<>( statusInfo, tokenInfo, responseData, clientActionFlag );
         }
 
     }
