@@ -3,8 +3,6 @@ package com.github.pplociennik.commons.system.registry.impl;
 
 import com.github.pplociennik.commons.system.registry.CollectingSystemRegistry;
 import com.github.pplociennik.commons.system.registry.SystemRegistry;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
 
 import java.util.Collection;
@@ -26,8 +24,6 @@ import static java.util.Objects.requireNonNull;
  *         the type of elements maintained by this registry
  * @author Created by: Pplociennik at 27.05.2025 16:59
  */
-@AllArgsConstructor
-@NoArgsConstructor
 public final class HashSetBasedSystemRegistry< T > implements CollectingSystemRegistry< T > {
 
     /**
@@ -36,7 +32,24 @@ public final class HashSetBasedSystemRegistry< T > implements CollectingSystemRe
      * The storage is backed by a {@code HashSet}, which provides constant-time performance
      * for basic operations such as add, remove, and contains.
      */
-    private Set< T > values = new HashSet<>();
+    private Set< T > values;
+
+    /**
+     * Constructs an empty {@code HashSetBasedSystemRegistry} with an empty {@link HashSet} as the underlying storage.
+     */
+    public HashSetBasedSystemRegistry() {
+        this.values = new HashSet<>();
+    }
+
+    /**
+     * Constructs a {@code HashSetBasedSystemRegistry} initialized with the specified set of values.
+     *
+     * @param aValues
+     *         the set of initial values to be stored in the registry
+     */
+    public HashSetBasedSystemRegistry( Set< T > aValues ) {
+        this.values = aValues;
+    }
 
     /**
      * Adds the specified objects to the collecting system registry.
@@ -159,7 +172,7 @@ public final class HashSetBasedSystemRegistry< T > implements CollectingSystemRe
      * @return a clone of this {@code SystemRegistry} instance
      */
     @Override
-    public SystemRegistry< T > clone() {
+    public SystemRegistry< T > cloneRegistry() {
         return new HashSetBasedSystemRegistry<>( values );
     }
 }

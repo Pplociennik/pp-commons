@@ -40,5 +40,5 @@ public interface SystemRegistry< T > {
      *
      * @return a clone of this {@code SystemRegistry} instance
      */
-    SystemRegistry< T > clone();
+    SystemRegistry< T > cloneRegistry();
 }
