@@ -30,6 +30,7 @@ import com.github.pplociennik.commons.dto.ErrorResponseDto;
 import com.github.pplociennik.commons.exc.resources.ResourceNotFoundException;
 import com.github.pplociennik.commons.utility.LanguageUtil;
 import jakarta.ws.rs.Produces;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,7 @@ import static com.github.pplociennik.commons.lang.CommonsResExcMsgTranslationKey
  *
  * @author Created by: Pplociennik at 20.03.2024 17:50
  */
+@Log4j2
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
@@ -86,7 +88,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseBody
     @Produces( MediaType.APPLICATION_JSON_VALUE )
     ResponseEntity< ErrorResponseDto > handleUnexpectedException( Exception aException, WebRequest aWebRequest ) {
-        var message = LanguageUtil.getLocalizedMessage( UNEXPECTED_EXCEPTION, aException.getMessage() );
+        var message = LanguageUtil.getLocalizedMessage( UNEXPECTED_EXCEPTION );
+        log.error( message, aException );
+
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(
                 aWebRequest.getDescription( false ),
                 HttpStatus.INTERNAL_SERVER_ERROR,
