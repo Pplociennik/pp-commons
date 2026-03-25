@@ -42,7 +42,7 @@ public enum CommonsResExcMsgTranslationKey implements TranslationKey {
     RESOURCE_DOES_NOT_EXIST,
 
     /**
-     * Unexpected exception! Reason: {0}
+     * Unexpected exception!
      */
     UNEXPECTED_EXCEPTION,
 
