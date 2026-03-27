@@ -26,7 +26,7 @@
 
 package com.github.pplociennik.commons.dto;
 
-import com.github.pplociennik.commons.system.client.ClientActionFlag;
+import com.github.pplociennik.commons.system.client.ServerEventFlag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -78,7 +78,7 @@ public class ErrorResponseDto< T extends Serializable > extends BaseAbstractExte
             description = "A client action flag determining an action to be executed on the client's side after receiving the response.",
             example = "VERIFY_USER_EMAIL"
     )
-    private ClientActionFlag clientActionFlag;
+    private ServerEventFlag serverEventFlag;
 
     @Schema(
             description = "A data related to the response."
@@ -115,15 +115,15 @@ public class ErrorResponseDto< T extends Serializable > extends BaseAbstractExte
      *         the detailed error message describing the issue
      * @param errorTime
      *         the timestamp of when the error occurred
-     * @param clientActionFlag
+     * @param serverEventFlag
      *         the client action flag associated with the error
      */
-    public ErrorResponseDto( String apiPath, HttpStatus errorCode, String errorMessage, ZonedDateTime errorTime, ClientActionFlag clientActionFlag, List< T > responseData ) {
+    public ErrorResponseDto( String apiPath, HttpStatus errorCode, String errorMessage, ZonedDateTime errorTime, ServerEventFlag serverEventFlag, List< T > responseData ) {
         this.apiPath = apiPath;
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
         this.errorTime = errorTime;
-        this.clientActionFlag = clientActionFlag;
+        this.serverEventFlag = serverEventFlag;
         this.responseData = responseData;
     }
 
@@ -154,7 +154,7 @@ public class ErrorResponseDto< T extends Serializable > extends BaseAbstractExte
         private HttpStatus errorCode;
         private String errorMessage;
         private ZonedDateTime errorTime;
-        private ClientActionFlag clientActionFlag;
+        private ServerEventFlag serverEventFlag;
         private List< T > responseData;
 
         /**
@@ -177,14 +177,14 @@ public class ErrorResponseDto< T extends Serializable > extends BaseAbstractExte
         }
 
         /**
-         * Sets the client action flag for the builder.
+         * Sets the server event flag for the builder.
          *
-         * @param clientActionFlag
-         *         the client action flag to associate with the error response
+         * @param serverEventFlag
+         *         the server event flag to associate with the error response
          * @return the builder instance for method chaining
          */
-        public final Builder withClientActionFlag( ClientActionFlag clientActionFlag ) {
-            this.clientActionFlag = clientActionFlag;
+        public final Builder withServerEventFlag( ServerEventFlag serverEventFlag ) {
+            this.serverEventFlag = serverEventFlag;
             return this;
         }
 
@@ -205,10 +205,10 @@ public class ErrorResponseDto< T extends Serializable > extends BaseAbstractExte
          * that have been set in the {@code Builder}.
          *
          * @return a new instance of {@link ErrorResponseDto} containing the provided API path,
-         * error code, error message, error timestamp, and client action flag.
+         * error code, error message, error timestamp, and server event flag.
          */
         public final ErrorResponseDto build() {
-            return new ErrorResponseDto( this.apiPath, this.errorCode, this.errorMessage, this.errorTime, this.clientActionFlag, this.responseData );
+            return new ErrorResponseDto( this.apiPath, this.errorCode, this.errorMessage, this.errorTime, this.serverEventFlag, this.responseData );
         }
     }
 

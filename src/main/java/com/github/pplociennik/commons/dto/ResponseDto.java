@@ -26,7 +26,7 @@
 
 package com.github.pplociennik.commons.dto;
 
-import com.github.pplociennik.commons.system.client.ClientActionFlag;
+import com.github.pplociennik.commons.system.client.ServerEventFlag;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -77,7 +77,7 @@ public class ResponseDto< T extends Serializable > extends BaseAbstractExtendabl
     /**
      * Represents an action to be executed on the client side after receiving the response.
      */
-    private ClientActionFlag clientActionFlag;
+    private ServerEventFlag serverEventFlag;
 
     /**
      * Constructs a new instance of {@code ResponseDto}.
@@ -89,11 +89,11 @@ public class ResponseDto< T extends Serializable > extends BaseAbstractExtendabl
      * @param aResponseData
      *         the response data
      */
-    private ResponseDto( ResponseStatusInfoDto aStatusInfo, ResponseAccessTokenInfoDto aTokenInfo, List< T > aResponseData, ClientActionFlag aClientActionFlag ) {
+    private ResponseDto( ResponseStatusInfoDto aStatusInfo, ResponseAccessTokenInfoDto aTokenInfo, List< T > aResponseData, ServerEventFlag aServerEventFlag ) {
         this.statusInfo = aStatusInfo;
         this.tokenInfo = aTokenInfo;
         this.responseData = aResponseData;
-        this.clientActionFlag = aClientActionFlag;
+        this.serverEventFlag = aServerEventFlag;
     }
 
     /**
@@ -120,7 +120,7 @@ public class ResponseDto< T extends Serializable > extends BaseAbstractExtendabl
         private ResponseStatusInfoDto statusInfo;
         private ResponseAccessTokenInfoDto tokenInfo;
         private List< T > responseData;
-        private ClientActionFlag clientActionFlag;
+        private ServerEventFlag serverEventFlag;
 
         /**
          * Constructs a new {@code Builder} instance with default initial values.
@@ -195,15 +195,15 @@ public class ResponseDto< T extends Serializable > extends BaseAbstractExtendabl
         }
 
         /**
-         * Configures the {@code Builder} instance with a client action flag.
+         * Configures the {@code Builder} instance with a server event flag.
          *
-         * @param aClientActionFlag
-         *         the client action flag to be set, must not be null
-         * @return the current {@code Builder} instance with the specified client action flag
+         * @param aServerEventFlag
+         *         the server event flag to be set, must not be null
+         * @return the current {@code Builder} instance with the specified server event flag
          */
-        public final Builder< T > withClientActionFlag( @NonNull ClientActionFlag aClientActionFlag ) {
-            requireNonNull( aClientActionFlag );
-            this.clientActionFlag = aClientActionFlag;
+        public final Builder< T > withServerEventFlag( @NonNull ServerEventFlag aServerEventFlag ) {
+            requireNonNull( aServerEventFlag );
+            this.serverEventFlag = aServerEventFlag;
             return this;
         }
 
@@ -216,7 +216,7 @@ public class ResponseDto< T extends Serializable > extends BaseAbstractExtendabl
          * access token information, and response data configured in the {@code Builder}
          */
         public ResponseDto< T > build() {
-            return new ResponseDto<>( statusInfo, tokenInfo, responseData, clientActionFlag );
+            return new ResponseDto<>( statusInfo, tokenInfo, responseData, serverEventFlag );
         }
 
     }
